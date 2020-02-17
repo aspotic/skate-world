@@ -1,0 +1,46 @@
+Description: This addon will display items purchased next to members posts.
+
+Compatibility: XMB v1.8
+
+Code Designed By: nfpunk/Flixon
+
+* edit viewthread.php
+
+FIND
+--------------------------------------------------------------------------------
+if($post[author] != "Anonymous") {
+--------------------------------------------------------------------------------
+
+ADD BELOW
+--------------------------------------------------------------------------------
+$items = "";
+
+$itemsquery = $db->query("SELECT * FROM $table_member_items WHERE uid='$post[uid]'");
+
+while($memberitem = $db->fetch_array($itemsquery)) {
+	$itemquery = $db->query("SELECT * FROM $table_shop_items WHERE id='$memberitem[iid]'");
+	$item = $db->fetch_array($itemquery);
+
+	if($item[imageurl] == "") {
+		$items .= "<img src=\"$imgdir/folder.gif\" border=\"0\" alt=\"$item[itemname]\"> "; // You may wish to change this
+	} else {
+		$items .= "<img src=\"$item[imageurl]\" border=\"0\" alt=\"$item[itemname]\"> ";
+	}
+}
+
+if($items != "") {
+	$items = "<br><br>$lang_shop_textitems: $items";
+}
+--------------------------------------------------------------------------------
+
+* edit viewthread_post template
+
+FIND
+--------------------------------------------------------------------------------
+$post[mood]
+--------------------------------------------------------------------------------
+
+ADD AFTER
+--------------------------------------------------------------------------------
+$items
+--------------------------------------------------------------------------------

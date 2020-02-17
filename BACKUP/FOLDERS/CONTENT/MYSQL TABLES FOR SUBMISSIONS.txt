@@ -1,0 +1,156 @@
+CREATE TABLE downloads ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url varchar(80), 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE games ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url varchar(80), 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE clinks ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url varchar(80), 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE linkus ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url varchar(90), 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE computers ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE rgames ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE hardware ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE software ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE css ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE html ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+);
+CREATE TABLE photoshop ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE php ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE news ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE articles ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE links ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url varchar(80), 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE bearings ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE decks ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE more ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE trucks ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE wheels ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE stories ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE flip ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE grinds ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE other ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE vert ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 
+CREATE TABLE beginner ( 
+id mediumint(10) NOT NULL auto_increment, 
+title varchar(80), 
+url text, 
+PRIMARY KEY (id) 
+); 

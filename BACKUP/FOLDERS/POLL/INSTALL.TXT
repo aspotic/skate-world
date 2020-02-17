@@ -1,0 +1,93 @@
+-[MP POLL V0.01 INTRODUCTION]-[START]--------------------------------------------------
+
+MP Poll v0.01 Install Document
+Morgan Andersson @ Morgande Produsctions (www.morgande.com)
+Free to use, a link to www.morgande.com must be present.
+
+Note: First doc and release, may be alot of bugs, please report to me at
+	morgan@morgande.com for further developement.
+
+-[MP POLL V0.01 INTRODUCTION]-[START]--------------------------------------------------
+
+-[MYSQL DATABASE]-[START]--------------------------------------------------------------
+
+Copy and paste in php myAdmin, Type your username and password as shown below.
+
+CREATE TABLE poll ( 
+    pollid INT(11) DEFAULT '0' NOT NULL auto_increment, 
+    question TINYTEXT NOT NULL,
+	lastip TEXT,
+    active VARCHAR(3) DEFAULT 'no' NOT NULL, PRIMARY KEY (pollid)); 
+
+CREATE TABLE poll_answers ( 
+    answerid INT(11) DEFAULT '0' NOT NULL auto_increment, 
+    pollid INT(11), 
+	answers VARCHAR(20) NOT NULL,
+	votes INT(11) DEFAULT '0',
+	result INT(11) DEFAULT '0', PRIMARY KEY (answerid));
+
+CREATE TABLE poll_admin ( 
+    username VARCHAR(20) NOT NULL, 
+    password VARCHAR(20) NOT NULL);
+
+INSERT INTO poll_admin (username,password)
+				VALUES ('TYPE YOUR ADMIN USERNAME HERE','TYPE YOUR ADMIN PASSWORD HERE')
+
+-[MYSQL DATABASE]-[END]---------------------------------------------------------------
+
+-[db.inc.php]-[START]-----------------------------------------------------------------
+
+<?
+$db_server = "Your mysql path here";
+$db_name = "Your mysql databsae name here";
+$db_uname  = "Your mysql Username Here";
+$db_pass   = "Your mysql password here";
+?>
+
+example:
+
+<?
+$db_server = "localhost";
+$db_name = "polldb";
+$db_uname  = "morgan";
+$db_pass   = "123456";
+?>
+
+-[db.inc.php]-[END]------------------------------------------------------------------
+
+-[File Structure]-[START]-----------------------------------------------------------------
+
+Root Directory
+
+Index.php
+poll.php
+pastpoll.php
+pastresults.php
+blue.gif
+
+Admin Directory
+
+admin.php
+login.php
+db.inc.php
+pollconfig.php
+polldb.php
+pollfunctions.php
+
+
+Note: 	In your index.php you must type <?php include "poll.php"; ?> to include your poll.
+	To get to the Admin Area you must run login.php.
+
+-[File Structure]-[END]------------------------------------------------------------------
+
+Release notes:
+
+v0.xx:
+In Progress 	- 	I need feedback and suggestions in order to make a good free poll system.
+
+v0.03:
+22 May 2003 	- 	First version released.
+	 		The poll have been running at www.3dlr.com for a month and it has
+			been working without any problems.
+v0.01:
+20 March 2003 	-	Started on the scripts, Got it up and running for test on www.3dlr.com.

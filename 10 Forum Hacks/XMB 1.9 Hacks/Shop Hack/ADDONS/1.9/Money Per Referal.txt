@@ -1,0 +1,199 @@
+Description: This addon is the member referral hack and gives a member an amount decided in the shop admin settings for referring a member.
+
+Note: You must have the referral hack (http://www.computerelated.com/forum/viewthread.php?tid=62) for this to work.
+
+Compatibility: XMB v1.9
+
+Code Designed By: nfpunk/Flixon
+
+* edit member.php
+
+FIND
+--------------------------------------------------------------------------------
+$db->query("UPDATE $table_members SET referrals=referrals+1, referred='$referlist' WHERE username='$refer'");
+--------------------------------------------------------------------------------
+
+REPLACE WITH
+--------------------------------------------------------------------------------
+$setquery = $db->query("SELECT mpr FROM $table_shop_settings");
+$mpr = $db->result($setquery, 0);
+
+$db->query("UPDATE $table_members SET referrals=referrals+1, referred='$referlist', money=money+'$mpr' WHERE username='$refer'");
+--------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------
+Hack Name: Member Referral Hack 
+
+Version: 2
+
+Compatibility: v1.8 SP2 -- NOT SP1 or earlier without changes 
+
+Author: author of original referrals hack unknown. Current version by Rev@xmbsouce.co.uk
+
+Release Note: Do NOT post or distribute this hack without my express permission. 
+
+Hack Description:  This hack will allow registering users to specify who directed them to your forums.
+                   Additionally, can view user profiles to find out how many people a user has referred, 
+                   who they have referred, and who referred them.
+
+
+NOTE: Remember to BACKUP all files, templates and your database 
+      prior to attempting to install this modification to your forum.
+
+This hack replicates the original funcitonality of an older, non-attributed, 
+referrals hack, and does not add any further functionality. 
+Future releases will incldue the ability of current members to indicate 
+who had referred them, and other modifications as considered appropriate.
+
+COPYRIGHT: This hack is copyright by Rev and may not be posted to other sites 
+or otherwise distributed without my express permission. 
+You can send email requests for such to jmcmanus@ev1.net or rev@xmbsource.co.uk
+
+
+
+OPEN member.php file
+1.  FIND:
+	$password = md5(trim($password));
+
+
+   ADD BELOW THAT:
+
+// BEGIN REFERRAL HACK HERE
+if($refer != "") {
+	$checkquery = $db->query("SELECT username FROM $table_members WHERE username='$refer'");
+	$memexcheck = $db->fetch_array($checkquery);
+	if($memexcheck[username] == "") {
+			echo "<center>Member $refer does not exist in the database.</center>";
+			exit;
+		} else {
+			$querycheck = $db->query("SELECT referred FROM $table_members WHERE username='$refer'");
+			$refering = $db->fetch_array($querycheck);
+			$referlist = $refering[referred];
+			if($referlist == "") {
+			$referlist .= $username;
+			} else {
+			$referlist .= ", " . $username;
+			}
+			$db->query("UPDATE $table_members SET referrals=referrals+1, referred='$referlist' WHERE username='$refer'");
+		}
+	}
+// END REFERALL HACK HERE
+
+
+
+
+2.    FIND:
+
+      The line that begins 
+	$db->query("INSERT INTO $table_members VALUES ('', '$username',
+      and ends with 
+	)");
+
+
+      INSERT JUST BEFORE THE )");
+
+	, '0', '$refer', ''
+
+
+3.   SAVE your modified member.php file
+
+
+OPEN your English_lang.php file (for otehr languages, translation of the variable swill be needed)
+
+1.  FIND: (the final line of code in the file)
+	?>
+
+    JUST ABOVE THAT ADD:
+
+	// Referral Hack variables
+	$lang_referrals = "Number of referrals:";
+	$lang_referred_by = "Referred by:";
+	$lang_referred_members = "Members referred by this user:";
+	// End of Referral Hack variables
+
+
+2.   SAVE your modified English.lang.php file
+
+
+
+NEXT, GO TO YOUR FORUM ADMINISTRATION PANEL
+
+1.  Open the Templates utility and EDIT the following TEMPLATES
+
+   a. member_profile	
+
+     FIND:
+
+	<tr><td bgcolor="$altbg1" valign="top"
+	class="tablerow">$lang_textbio</td>
+	<td bgcolor="$altbg2" class="tablerow">$memberinfo[bio]
+	</td></tr>
+
+
+    ADD BELOW THAT:
+
+
+	<tr><td bgcolor="$altbg1" valign="top" class="tablerow">$lang_referrals</td>
+	<td bgcolor="$altbg2" class="tablerow">$memberinfo[referrals]</td></tr>
+
+	<tr><td bgcolor="$altbg1" class="tablerow">$lang_referred_by</td>
+	<td bgcolor="$altbg2" class="tablerow">$memberinfo[referredby]</td></tr>
+
+	<tr><td bgcolor="$altbg1" valign="top" class="tablerow"> $lang_referred_members</td>
+	<td bgcolor="$altbg2" class="tablerow">$memberinfo[referred]</td></tr>
+
+
+  b. member_reg
+
+    FIND:
+
+	<tr>
+	<td colspan="2" class="header" $catbgcode>$lang_textregister -
+	$lang_optional</td>
+	</tr>
+
+    ADD BELOW THAT:
+
+	<tr>
+	<td bgcolor="$altbg1" class="tablerow">Referred By:</td>
+	<td bgcolor="$altbg2" class="tablerow"><input type="text" 
+	name="refer" size="25" /></td>
+	</tr>
+
+
+NEXT, GO TO THE UPGRADE Utility in the Administration Panel
+
+
+Type in the following code in the text area (replace xmb_ with your 'pre' setting if you cahnged it in your config.php file):
+
+ALTER TABLE xmb_members ADD referrals VARCHAR(6) NOT NULL;
+ALTER TABLE xmb_members ADD referredby VARCHAR(25) NOT NULL;
+ALTER TABLE xmb_members ADD referred TEXT NOT NULL;
+
+THEN CLICK on the Submit Changes button.
+
+
+FINALLY, UPLOAD the modified member.php and English.lang.php file (and/or other language file)
+
+
+You have now completed this hack. You are STRONGLY advised to log out, and register as a new user to see that it works.
+

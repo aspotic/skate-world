@@ -1,0 +1,324 @@
+[1.9 Release] Gender -- Marital Status
+
+Description: This adds a "Gender" option in everyones profile. 
+
+Version: 1.0
+
+Compatible: XMB 1.9 Nexus Final
+
+Gender, Code Designed By: unknown
+
+Updated Code Design for 1.9 By: FunForum
+
+Updated Code By: Drumsticks
+
+Notes: 
+- Please, for your own safety, backup all effected files, templates & Database tables before proceeding with this hack
+- In this version, after installing everyones profile will say "None Selected" instead of nothing.
+
+
+
+
+
+
+Run In Upgrade:
+--------------------------------------------------------------------------------
+ALTER TABLE $table_members ADD gender varchar(15) NOT NULL;
+--------------------------------------------------------------------------------
+
+
+
+Edit PHP File: member.php
+
+Find:
+--------------------------------------------------------------------------------
+$db->query("INSERT INTO $table_members VALUES (
+--------------------------------------------------------------------------------
+
+Add to the end of the statement:
+--------------------------------------------------------------------------------
+, '$gender'
+--------------------------------------------------------------------------------
+
+Example:
+--------------------------------------------------------------------------------
+        $db->query("INSERT INTO $table_members VALUES ('', '$username', '$password', ".$db->time(time()).", '0', '$email', '$site', '$aim', '$self[status]',  '$locationnew', '$bio', '$sig', '$showemail', '$timeoffset1', '$icq', '$avatar', '$yahoo', '', '$thememem', '$bday', '$newlangfile', '$tpp', '$ppp',  '$newsletter', '$onlineip', '$timeformatnew', '$msn', '', '$dateformatnew', '', '', '$newmood', '', '0', '', '$saveogu2u', '$emailonu2u', '$useoldu2u', '$webcam', '$gender')");
+--------------------------------------------------------------------------------
+
+
+Find:
+--------------------------------------------------------------------------------
+            if($memberinfo['webcam'] != 'http://') {
+                $webcam = $memberinfo['webcam'];
+            }else{
+                $webcam = '';
+            }
+--------------------------------------------------------------------------------
+
+Add Below:
+--------------------------------------------------------------------------------
+            // Gender
+                if($memberinfo['gender'] == $lang[genderm]){ $gender = "<img src=\"" .$imgdir. "/gender_male.gif\" alt=\"" .$lang[genderm]. "\">"; }
+                elseif($memberinfo['gender'] == $lang[genderf]){ $gender = "<img src=\"" .$imgdir. "/gender_female.gif\" alt=\"" .$lang[genderf]. "\">"; }
+                else{ $gender = "<img src=\"" .$imgdir. "/gender_none.gif\">"; $memberinfo['gender'] = $lang['gendern']; }
+--------------------------------------------------------------------------------
+
+
+
+Edit PHP File: memcp.php
+
+Find:
+--------------------------------------------------------------------------------
+        if($avastatus == "on") {
+            eval("\$avatar = \"".template("memcp_profile_avatarurl")."\";");
+        }
+--------------------------------------------------------------------------------
+
+Add Below:
+--------------------------------------------------------------------------------
+        // Gender
+            if($member['gender'] == $lang[genderm]){ $gender_m = "selected=\"selected\""; }
+            elseif($member['gender'] == $lang[genderf]){ $gender_f = "selected=\"selected\""; }
+            else{ $gender_n = "selected=\"selected\""; }
+
+--------------------------------------------------------------------------------
+
+Find:
+--------------------------------------------------------------------------------
+        $db->query("UPDATE $table_members SET $pwtxt
+--------------------------------------------------------------------------------
+
+Add to the end of the statement:
+--------------------------------------------------------------------------------
+, gender='$gender'
+--------------------------------------------------------------------------------
+
+Example:
+--------------------------------------------------------------------------------
+        $db->query("UPDATE $table_members SET $pwtxt email='$email', site='$site', aim='$aim', location='$memlocation', bio='$bio', sig='$sig', showemail='$showemail', timeoffset='$timeoffset1', icq='$icq', avatar='$avatar', yahoo='$yahoo', theme='$thememem', bday='$bday', langfile='$langfilenew', tpp='$tppnew', ppp='$pppnew', newsletter='$newsletter', timeformat='$timeformatnew', msn='$msn', dateformat='$dateformatnew', mood='$mood', invisible='$invisible', saveogu2u='$saveogu2u', emailonu2u='$emailonu2u', useoldu2u='$useoldu2u', webcam='$webcam', gender='$gender' WHERE username='$xmbuser'");
+--------------------------------------------------------------------------------
+
+
+
+Edit PHP File: editprofile.php
+
+Find:
+--------------------------------------------------------------------------------
+    if($avastatus == "on") {
+        eval("\$avatar = \"".template("memcp_profile_avatarurl")."\";");
+    }
+--------------------------------------------------------------------------------
+
+Add Below:
+--------------------------------------------------------------------------------
+    // Gender
+        if($member['gender'] == $lang[genderm]){ $gender_m = "selected=\"selected\""; }
+        elseif($member['gender'] == $lang[genderf]){ $gender_f = "selected=\"selected\""; }
+        else{ $gender_n = "selected=\"selected\""; }
+
+--------------------------------------------------------------------------------
+
+Find:
+--------------------------------------------------------------------------------
+    $db->query("UPDATE $table_members SET
+--------------------------------------------------------------------------------
+
+Add to the end of the statement:
+--------------------------------------------------------------------------------
+, gender='$gender'
+--------------------------------------------------------------------------------
+
+Example:
+--------------------------------------------------------------------------------
+    $db->query("UPDATE $table_members SET email='$email', site='$site', aim='$aim', location='$memlocation', bio='$bio', sig='$sig', showemail='$showemail', timeoffset='$timeoffset1', icq='$icq', avatar='$avatar', yahoo='$yahoo', theme='$thememem', bday='$bday', langfile='$langfilenew', tpp='$tppnew', ppp='$pppnew', newsletter='$newsletter', timeformat='$timeformatnew', msn='$msn', dateformat='$dateformatnew', mood='$mood', invisible='$invisible', saveogu2u='$saveogu2u', emailonu2u='$emailonu2u', useoldu2u='$useoldu2u', webcam='$webcam', gender='$gender' WHERE username='$user'");
+--------------------------------------------------------------------------------
+
+
+
+Edit PHP File: viewthread.php
+
+Find:
+--------------------------------------------------------------------------------
+            if($post['mood'] != ''){
+                $mood = '<b>'.$lang['mood'].'</b> '.postify($post['mood'], 'no', 'no', 'yes', 'no', 'yes', 'no', true, 'yes');
+            }else{
+                $mood = '';
+            }
+--------------------------------------------------------------------------------
+
+Add Below:
+--------------------------------------------------------------------------------
+            // BEGIN GENDER HACK
+                if($post[gender] == $lang[genderm]){ $gender = "<img src=\"" .$imgdir. "/gender_male.gif\" alt=\"" .$lang['genderm']. "\">"; }
+                elseif($post[gender] == $lang[genderf]){ $gender = "<img src=\"" .$imgdir. "/gender_female.gif\" alt=\"" .$lang['genderf']. "\">"; }
+                else{ $gender = "<img src=\"" .$imgdir. "/gender_none.gif\">"; }
+--------------------------------------------------------------------------------
+
+
+
+Edit PHP File: misc.php
+
+Find:
+--------------------------------------------------------------------------------
+                eval("\$members .= \"".template("misc_mlist_row")."\";");
+--------------------------------------------------------------------------------
+
+Add Above:
+--------------------------------------------------------------------------------
+                // BEGIN GENDER HACK
+                    if($member[gender] == "$lang[genderm]"){ $gender = "<img src=\"" .$imgdir. "/gender_male.gif\" alt=\"" .$lang['genderm']. "\">"; }
+                    elseif($member[gender] == "$lang[genderf]"){ $gender = "<img src=\"" .$imgdir. "/gender_female.gif\" alt=\"" .$lang['genderf']. "\">"; }
+                    else{ $gender = "<img src=\"" .$imgdir. "/gender_none.gif\">"; }
+--------------------------------------------------------------------------------
+
+
+
+Edit language file
+
+Find:
+--------------------------------------------------------------------------------
+?>
+--------------------------------------------------------------------------------
+
+Add Above:
+--------------------------------------------------------------------------------
+// Gender Hack
+$lang['genderh'] = "Gender:";
+$lang['gendern'] = "None Selected";
+$lang['genderm'] = "Male";
+$lang['genderf'] = "Female";
+
+--------------------------------------------------------------------------------
+
+
+
+Edit Template: admintool_editprofile
+
+Find:
+--------------------------------------------------------------------------------
+$dayselect
+<input type="text" name="year" size="4" value="$bday[2]" />
+</td>
+</tr>
+--------------------------------------------------------------------------------
+
+Add Below:
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" class="tablerow">$lang[genderh]</td>
+<td bgcolor="$altbg2" class="tablerow">
+<select name="gender">
+<option value="$lang[gendern]" $gender_n>$lang[gendern]</option>
+<option value="$lang[genderm]" $gender_m>$lang[genderm]</option>
+<option value="$lang[genderf]" $gender_f>$lang[genderf]</option>
+</select>
+</td>
+</tr>
+--------------------------------------------------------------------------------
+
+
+
+Edit Template: member_profile
+
+Find:
+--------------------------------------------------------------------------------
+$memberinfo[username]
+--------------------------------------------------------------------------------
+Add After:
+--------------------------------------------------------------------------------
+$gender
+--------------------------------------------------------------------------------
+
+Find:
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" class="tablerow">$lang[textbday]</td>
+<td bgcolor="$altbg2" class="tablerow">$memberinfo[bday]</td>
+</tr>
+--------------------------------------------------------------------------------
+
+Add Below:
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" class="tablerow">$lang[genderh]</td> 
+<td bgcolor="$altbg2" class="tablerow">$memberinfo[gender]</td>
+</tr>
+--------------------------------------------------------------------------------
+
+
+
+Edit Template: member_reg
+
+Find:
+--------------------------------------------------------------------------------
+$dayselect
+<input type="text" name="year" size="4" /></td>
+</tr>
+--------------------------------------------------------------------------------
+
+Add Below:
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" class="tablerow">$lang[genderh]</td>
+<td bgcolor="$altbg2" class="tablerow">
+<select name="gender">
+<option value="$lang[gendern]" $gender_n>$lang[gendern]</option>
+<option value="$lang[genderm]" $gender_m>$lang[genderm]</option>
+<option value="$lang[genderf]" $gender_f>$lang[genderf]</option>
+</select>
+</td>
+</tr>
+--------------------------------------------------------------------------------
+
+
+
+Edit Template: memcp_profile
+
+Find:
+--------------------------------------------------------------------------------
+$dayselect
+<input type="text" name="year" size="4" value="$bday[2]" /></td>
+</tr>
+--------------------------------------------------------------------------------
+
+Add Below:
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" class="tablerow">$lang[genderh]</td>
+<td bgcolor="$altbg2" class="tablerow">
+<select name="gender">
+<option value="$lang[gendern]" $gender_n>$lang[gendern]</option>
+<option value="$lang[genderm]" $gender_m>$lang[genderm]</option>
+<option value="$lang[genderf]" $gender_f>$lang[genderf]</option>
+</select>
+</td>
+</tr>
+--------------------------------------------------------------------------------
+
+
+
+Edit Template: misc_mlist_row
+
+Find:
+--------------------------------------------------------------------------------
+$member[username]</a>
+--------------------------------------------------------------------------------
+
+Add After:
+--------------------------------------------------------------------------------
+$gender
+--------------------------------------------------------------------------------
+
+
+
+Edit Template: viewthread_post
+
+Find:
+--------------------------------------------------------------------------------
+<b>$post[author]</b></font>
+--------------------------------------------------------------------------------
+
+Add After:
+--------------------------------------------------------------------------------
+$gender
+--------------------------------------------------------------------------------

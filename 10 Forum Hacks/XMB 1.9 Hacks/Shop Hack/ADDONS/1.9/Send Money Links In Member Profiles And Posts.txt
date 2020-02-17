@@ -1,0 +1,48 @@
+Description: This addon adds links in member profiles and posts to send money.
+
+Compatibility: XMB v1.9
+
+Code Designed By: nfpunk/Flixon
+
+* edit shop_bank.php
+
+FIND
+--------------------------------------------------------------------------------
+$sendoptions .= "<option value=\"$member[uid]\">$member[username]</option>\n";
+--------------------------------------------------------------------------------
+
+REPLACE WITH
+--------------------------------------------------------------------------------
+if($username == $member['username']) {
+	$sendoptions .= "<option value=\"$member[uid]\" selected>$member[username]</option>\n";
+} else {
+	$sendoptions .= "<option value=\"$member[uid]\">$member[username]</option>\n";
+}
+--------------------------------------------------------------------------------
+
+* edit member_profile template
+
+FIND
+--------------------------------------------------------------------------------
+(<a href="#" onclick="Popup('u2u.php?action=send&amp;username=$encodeuser', 'Window', 700, 450);">$lang[textu2u]</a>)&nbsp;
+--------------------------------------------------------------------------------
+
+ADD AFTER
+--------------------------------------------------------------------------------
+(<a href="shop_bank.php?action=send&amp;username=$encodeuser">Send Money</a>)&nbsp;
+--------------------------------------------------------------------------------
+
+* edit viewthread_post template
+
+FIND
+--------------------------------------------------------------------------------
+$yahoo
+--------------------------------------------------------------------------------
+
+ADD AFTER
+--------------------------------------------------------------------------------
+<a href="shop_bank.php?action=send&amp;username=$encodename"><img src="$imgdir/send.gif" border="0"
+alt="Send Money" /></a>
+--------------------------------------------------------------------------------
+
+* you now have to upload a send.gif picture to your chosen themes image directory

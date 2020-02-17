@@ -1,0 +1,165 @@
+Description: This hack will add the ability to specify subject prefixes that can be used when creating a new thread or posting a reply.
+
+Compatibility: XMB v1.9
+
+Code Designed By: John
+
+Edited by: Drumsticks
+
+Example: http://www.computerelated.com/demos/xmb18
+
+Notes: Always backup your templates and files before installing!
+
+Notice: Posting or distributing this hack, without permission from the author, is not permitted.
+
+
+
+RUN IN UPGRADE
+
+ALTER TABLE xmb_settings ADD subjectprefixes text NOT NULL;
+
+
+
+EDIT ENGLISH.LANG.PHP
+
+FIND
+
+?>
+
+ADD ABOVE
+
+$lang_topicsubjectprefixes = "Topic Subject Prefixes:<br /><font class=\"smalltxt\"><b>Note:</b> Seperate each prefix with a comma.<br /><b>Example:</b> prefix #1,prefix #2,prefix #3</font>";
+
+
+
+EDIT CP.PHP
+
+FIND
+
+$SETTINGS['tickercontents'] = stripslashes($SETTINGS['tickercontents']);
+
+ADD BELOW
+
+$SETTINGS['subjectprefixes'] = stripslashes($SETTINGS['subjectprefixes']);
+
+FIND
+
+printsetting2($lang_texttpp, "topicperpagenew", $SETTINGS[topicperpage], "2");
+
+ADD BELOW
+
+printsetting2($lang_topicsubjectprefixes, "subjectprefixesnew", $SETTINGS[subjectprefixes], "50");
+
+FIND
+
+$tickercontentsnew = addslashes($tickercontentsnew);
+
+ADD BELOW
+
+$subjectprefixesnew = addslashes($subjectprefixesnew);
+
+FIND
+
+$db->query("UPDATE $table_settings SET 
+
+ADD AFTER
+
+subjectprefixes = '$subjectprefixesnew', 
+
+
+
+EDIT POST.PHP
+
+FIND
+
+eval('$bbcodescript = "'.template('functions_bbcode').'";');
+
+ADD BELOW
+
+// BEGIN TOPIC SUBJECT PREFIXES
+
+ {
+	
+	$prefix = "<select name=\"subjectprefix\">
+    <option value=\"\" selected>&nbsp;&nbsp;</option>
+    <option value=\"[UNRESOLVED]\">[UNRESOLVED]&nbsp;&nbsp;</option>
+	<option value=\"[RESOLVED]\">[RESOLVED]&nbsp;&nbsp;</option>
+	<option value=\"[QUESTION]\">[QUESTION]&nbsp;&nbsp;</option>
+	<option value=\"[HELP ME]\">[HELP ME]&nbsp;&nbsp;</option>
+	<option value=\"[NEED HELP?\">[NEED HELP?]&nbsp;&nbsp;</option>
+    </select>\n";
+}
+
+// END TOPIC SUBJECT PREFIXES
+
+FIND
+
+$db->query("INSERT INTO $table_threads VALUES ('', '$fid', '$subject', '$posticon', '$thatime|$username', '0', '0', '$username', '', '', '$pollanswers')");
+
+REPLACE WITH
+
+$db->query("INSERT INTO $table_threads VALUES ('', '$fid', '$subjectprefix $subject', '$posticon', '$thatime|$username', '0', '0', '$username', '', '', '$pollanswers')");
+
+FIND (3 times)
+
+$subject = addslashes($subject);
+
+ADD BELOW (3 times)
+
+$subjectprefix = addslashes($subjectprefix);
+
+FIND (2 times)
+
+$db->query("INSERT INTO $table_posts VALUES ('$fid', '$tid', '', '$username', '$message', '$subject', ".$db->time($thatime).", '$posticon', '$usesig', '$onlineip', '$bbcodeoff', '$smileyoff')");
+
+REPLACE WITH (2 times)
+
+$db->query("INSERT INTO $table_posts VALUES ('$fid', '$tid', '', '$username', '$message', '$subjectprefix $subject', ".$db->time($thatime).", '$posticon', '$usesig', '$onlineip', '$bbcodeoff', '$smileyoff')");
+
+
+
+EDIT POST_NEWTHREAD TEMPLATE
+
+FIND
+
+<input type="text" name="subject" size="45" value="$subject">
+
+ADD BEFORE
+
+$prefix
+
+
+
+EDIT POST_REPLY TEMPLATE
+
+FIND
+
+<input type="text" name="subject" size="45" value="$subject" />
+
+ADD BEFORE
+
+$prefix
+
+
+
+EDIT POST_NEWPOLL TEMPLATE
+
+FIND
+
+<input type="text" name="subject" size="45" value="$subject" />
+
+ADD BEFORE
+
+$prefix
+
+
+
+EDIT POST_PREVIEW TEMPLATE
+
+FIND
+
+<b>$dissubject</b>
+
+REPLACE WITH
+
+<b>$subjectprefix $dissubject</b>

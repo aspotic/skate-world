@@ -1,0 +1,45 @@
+Description: This addon adds links in member profiles and posts to send money.
+
+Compatibility: XMB v1.9
+
+Code Designed By: nfpunk/Flixon
+
+Code updated for the Bank hack by: FunForum
+
+
+
+
+
+* edit member_profile template
+
+FIND
+--------------------------------------------------------------------------------
+(<a href="#" onclick="Popup('u2u.php?action=send&amp;username=$encodeuser', 'Window', 700, 450);">$lang[textu2u]</a>)&nbsp;
+--------------------------------------------------------------------------------
+
+ADD AFTER
+--------------------------------------------------------------------------------
+(<a href="bank.php?action=wire&amp;username=$encodeuser">Send Money</a>)&nbsp;
+--------------------------------------------------------------------------------
+
+
+
+
+
+* edit viewthread_post template
+
+FIND
+--------------------------------------------------------------------------------
+$yahoo
+--------------------------------------------------------------------------------
+
+ADD AFTER
+--------------------------------------------------------------------------------
+<a href="bank.php?action=wire&amp;username=$encodename"><img src="$imgdir/send.gif" border="0" alt="Send Money" /></a>
+--------------------------------------------------------------------------------
+
+
+
+
+
+* you now have to upload a send.gif picture to your chosen themes image directory

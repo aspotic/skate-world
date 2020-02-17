@@ -1,0 +1,657 @@
+<?php
+
+/*************************
+fusion news 3.6.1
+
+English language pack
+
+This is the default pack
+
+language pack version: 3.6.1
+
+NOTE:
+Some strings have variables (ex. $var) or html in them, make sure they don't
+lose there function
+*************************/
+
+$months = array("01" => "January", "02" => "February", "03" => "March", "04" => "April",
+                "05" => "May", "06" => "June", "07" => "July", "08" => "August",
+                "09" => "September", "10" => "October", "11" => "November", "12" => "December");
+                
+//°***************°
+//$ Errormessages $
+//°***************°
+$error0   = "Can't open comments.db.php for reading/writing!";
+$error1   = "You may not access this file.";
+$error2   = "Can't open archive.txt for reading/writing!";
+$error3   = "Can't open fnarchive.php for reading/writing!";
+$error4   = "Can't open news.php for reading/writing!<br>Make sure news.php is CHMODded to 777";
+$error5   = "Can't open news.php for reading/writing!<br>Make sure news.php is CHMODded to 777";
+$error6   = "Can't open headlines.txt for reading/writing!<br>Make sure headlines.php CHMODded to 777";
+$error7   = "Can't open news.*.php for reading/writing!<br>Make sure the folder $furl/news is CHMODded to 777 and all files in this folder to 666.";
+$error8   = "Can't open config.php for reading/writing!<br>Make sure config.php is CHMODded to 666";
+$error9   = "Can't open flood.php for reading/writing!<br>Make sure flood.php is CHMODded to 666";
+$error10  = "Error - no editable template chosen";
+$error11  = "Can't open users.php for reading/writing!<br>Make sure users.php is CHMODded to 666";
+$error12  = "You can't delete yourself";
+$error13  = "Can't open users.php for reading!<br>Make sure users.php is CHMODded to 666";
+$error14  = "You are not allowed to edit this post";
+$error15  = "LEAVE";
+$error16  = "Can't open news database files for reading!<br>Make sure the folder $furl/news is CHMODded to 777 and all files in this folder to 666.";
+$error17  = "Can't open badwords.txt for reading!<br>Make sure badwords.txt is CHMODded to 666";
+$error18  = "Can't open badwords.txt for reading/writing!<br>Make sure badwords.txt is CHMODded to 666";
+$error19  = "Can't open banned.php for reading/writing!<br>Make sure banned.php is CHMODded to 666";
+$error20  = "You are not permitted to post news!";
+$error21  = "Could not open the emoticons directory for reading, check paths and permissions";
+$error22  = "Can't open fusionnews.xml for reading/writing!<br>Make sure news.php is CHMODded to 666";
+
+//°*************°
+//$  Index.php  $
+//°*************°
+$ind0     = "Welcome to fusion. Please log in.<br><br>";
+$ind1     = "<br /><br /><br /><div align=\"center\">Thanks for downloading Fusion News 3.6.1.<br />This looks like your first time here. Please <a href=\"./installer.php\">install fusion news 3.6.1</a>.</div><br /><br /><br /><br />";
+$ind2     = "First time here";
+$ind3     = "login";
+$ind4a    = "new";
+$ind4b    = "old";
+$ind4     = "password";
+$ind5     = "poster";
+$ind6     = "email";
+$ind7     = "icon URL";
+$ind8     = "user level";
+$ind9     = "Logged in";
+$ind10    = "Log in";
+$ind11    = <<<html
+<tr>
+<td><a href="index.php?id=admin">admin</a></td>
+<td> - manage all admin settings</td>
+</tr>
+html;
+$ind12    = <<<html
+<tr>
+<td><a href="index.php?id=commentmanag">manage comments</a></td>
+<td> - edit, remove comments and ban post IPs</td>
+</tr>
+<tr>
+<td><a href="$furl/index.php?id=smillies">manage smillies</a></td
+<td> - manage smillies here</td>
+</tr>
+html;
+$ind13    = <<<html
+<div align="center"><table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse">
+<tr>
+<td><a href="index.php?id=postnews">post news</a></td>
+<td>- post a new newsitem.</td>
+</tr>
+<tr>
+<td><a href="index.php?id=editposts&pos=0">edit posts</a></td>
+<td> - edit exsisting newsitems</td>
+</tr>
+<tr>
+<td><a href="index.php?id=editprofile">edit profile</a></td>
+<td> - edit your profile</td>
+</tr>
+html;
+$ind14    = <<<html
+<tr>
+<td><a href="index.php?id=view">View news</a></td>
+<td> - View the current news items</td>
+</tr>
+<tr>
+<td><a href="$hurl">Webpage</a></td>
+<td> - Go back to your webpage</td>
+</tr>
+<tr>
+<td><a href="index.php?id=plugins">plugins</a></td>
+<td> - show all installed plugins</td>
+</tr>
+<tr>
+<td><a href="index.php?id=help">help/update</a></td>
+<td> - general help, checking for updates</td>
+</tr>
+<tr>
+<td><a href="$furl/index.php?id=logout">logout</a></td>
+<td> - destroy session/cookie</td>
+</tr>
+</table><br />
+html;
+$ind15    = "Post";
+$ind16    = "Reset";
+$ind17    = "error";
+$ind18    = "Bad username and/or password";
+
+//// admin page ////
+$ind19    = "Not allowed to view this feature";
+$ind20    = "Not admin.";
+$ind21    = "Settings saved";
+$ind21a   = "Settings not saved";
+$ind22    = "Your settings were saved. News.php has been updated";
+$ind22a   = "Your settings were not saved.";
+$ind23    = "Edit templates/headers/footers";
+
+// do not edit the {news}, {subject}, etc tags
+$ind24    = "Edit the templates for your news. you can use<br/><br/>
+             &raquo; {news}<br/>
+             &raquo; {icon}</br>
+             &raquo; {subject}<br/>
+             &raquo; {user}<br/>
+             &raquo; {date}<br/>
+             &raquo; {fullstory}<br/>
+             &raquo; {send} (send to a friend)<br/>
+             &raquo; {comments}<br/>
+             &raquo; {nrc} (number of comments)<br/><br/>
+             You may rearrange them in any order you wish  You can also use HTML/CSS to customize the news posts.";
+$ind25    = "Edit the templates for your news archive. you can use<br/><br/>
+             &raquo; {news}<br/>
+             &raquo; {icon}</br>
+             &raquo; {subject}<br/>
+             &raquo; {user}<br/>
+             &raquo; {date}<br/>
+             &raquo; {fullstory}<br/>
+             &raquo; {send} (send to a friend)<br/>
+             &raquo; {comments}<br/>
+             &raquo; {nrc} (number of comments)<br/><br/>
+             You may arrange them in any order.  You can use HTML/CSS";
+$ind26    = "Edit the template for your comments. you can use {comment}, {date}, {poster}, {posterip} to rearrange their placement and insert html tags.";
+$ind27    = "Edit header/footer and insert html tags";
+$ind28    = "Edit the header/footer for your full news and insert html tags.";
+$ind29    = "Edit the header/footer for your comments and insert html tags.";
+$ind30    = "Edit the template for your headlines. you can use<br/><br/>
+             &raquo; {linkstart}<br/>
+             &raquo; {subject}<br/>
+             &raquo; {user}<br/>
+             &raquo; {date}<br/>
+             &raquo; {icon}<br/>
+             &raquo; {linkend}<br/><br/>
+             {linkstart} and {linkend} surround the text which will function as the link.";
+$ind30a   = "Edit the template for your post per day. you can use {date} and {news_a_day}. {date} inserts the date of the posts and {news_a_day} inserts the news formated with the news template.";
+
+$ind31    = "Add user";
+$ind32    = "That login or nickname is already in use.";
+$ind33    = "Added user";
+$ind34    = "Edit users";
+$ind34a   = "The user was eddited succesfully.";
+$ind34b   = "Post news";
+$ind35    = "subject";
+$ind36    = "save";
+$ind37    = <<<html
+layout of the whole commentpage. This one is kinda complicated because you can edit all fields seperatly. These are all allowed fields:
+<table width="590" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="15%"><strong>{subject}</strong></td>
+    <td width="4%">:</td>
+    <td width="81%">subject of the newsitem who the comments belong
+      too.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{user}</strong></td>
+    <td valign="top">:</td>
+    <td>poster of the newsitem who the comments belong too.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{date}</strong></td>
+    <td valign="top">:</td>
+    <td>date of the newsitem who the comments belong too.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{icon}</strong></td>
+    <td valign="top">:</td>
+    <td>icon of the newsitem who the comments belong too.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{news}</strong></td>
+    <td valign="top">:</td>
+    <td>news of the newsitem who the comments belong too.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{com}</strong></td>
+    <td valign="top">:</td>
+    <td> commentslink of the newsitem who the comments belong too.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{nrc}</strong></td>
+    <td valign="top">:</td>
+    <td>commentscounter of the newsitem who the comments belong too.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{fullstory}</strong></td>
+    <td valign="top">:</td>
+    <td> fullstory of the newsitem who the comments belong too.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{comments}</strong></td>
+    <td valign="top">:</td>
+    <td>shows allready exsisting comments that belong to the newsitem using the
+      template above.</td>
+  </tr>
+  <tr>
+    <td colspan="3"><em>Below are the addpostfields.</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[form] and [/form]</strong></td>
+    <td valign="top">:</td>
+    <td>these fields surround all lower mentioned fields, just like in html and
+      they are <strong>required</strong>.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[namefld,width]</strong></td>
+    <td valign="top">:</td>
+    <td> namefield, the second part sets the width of the field.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[mailfld,width]</strong></td>
+    <td valign="top">:</td>
+    <td>mailfield, the second part sets the width of the field.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[pwfld,width]</strong></td>
+    <td valign="top">:</td>
+    <td>passwordfield, the second part sets the width of the field.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[comfld,width,height]</strong></td>
+    <td valign="top">:</td>
+    <td>commentfield, the second part sets the width and the third
+      the height of the field.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[comlen]</strong></td>
+    <td valign="top">:</td>
+    <td>this field holds the allowed length of comments</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[buttons]</strong></td>
+    <td valign="top">:</td>
+    <td>these are the post and reset buttons which saves or resets the comment.</td>
+  </tr>
+</table>
+html;
+$ind38 = <<<html
+layout of the whole send to friendpage. This one is kinda complicated because
+you can edit all fields seperatly. <br><b>Note:</b> This template does not have a header/footer, so all the html goes into this template.<br>These are all allowed fields:
+<table width="590" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="15%"><strong>{subject}</strong></td>
+    <td width="4%">:</td>
+    <td width="81%">subject of the newsitem.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{user}</strong></td>
+    <td valign="top">:</td>
+    <td>poster of the newsitem.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{date}</strong></td>
+    <td valign="top">:</td>
+    <td>date of the newsitem.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{icon}</strong></td>
+    <td valign="top">:</td>
+    <td>icon of the newsitem.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{news}</strong></td>
+    <td valign="top">:</td>
+    <td>news of the newsitem.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{fullstory}</strong></td>
+    <td valign="top">:</td>
+    <td>fullstory of the newsitem.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{com}</strong></td>
+    <td valign="top">:</td>
+    <td> commentslink of the newsitem.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>{nrc}</strong></td>
+    <td valign="top">:</td>
+    <td>commentscounter of the newsitem.</td>
+  </tr>
+  <tr>
+    <td colspan="3"><em>Below are the addpostfields.</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[form] and [/form]</strong></td>
+    <td valign="top">:</td>
+    <td>these fields surround all lower mentioned fields, just like in html and
+      they are <strong>required</strong>.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[sendnamefld,width]</strong></td>
+    <td valign="top">:</td>
+    <td> sender namefield, the second part sets the width of the field.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[recnamefld,width]</strong></td>
+    <td valign="top">:</td>
+    <td> receiver namefield, the second part sets the width of the field.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[sendmailfld,width]</strong></td>
+    <td valign="top">:</td>
+    <td>sender mailfield, the second part sets the width of the field.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[recmailfld,width]</strong></td>
+    <td valign="top">:</td>
+    <td>receiver mailfield, the second part sets the width of the field.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[mesfld,width,height]</strong></td>
+    <td valign="top">:</td>
+    <td>messagefield, the second part sets the width and the third the height
+      of the field.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>[buttons]</strong></td>
+    <td valign="top">:</td>
+    <td>these are the post and reset buttons which saves or resets the comment.</td>
+  </tr>
+</table>
+html;
+//START - admin section
+$ind45 = "Dir/URL settings";
+$ind46 = "These settings are the most important ones to get Fusion news 3.6 Basic to work properly.";
+$ind47 = "Full url to your site:";
+$ind48 = "The full url to your site, for example: http://www.mydomain.com";
+$ind49 = "Full url to fusion news Directory:";
+$ind50 = "For example: http://www.mydomain.com/news";
+$ind51 = "Full path to fusion news Directory:";
+$ind52 = "Linux systems: web/Apache/httd/user Win32 users: c:/apache/htdocs/news";
+$ind53 = "Full url to page with news:";
+$ind54 = "This is the url to the page where u include the news.php file into, for example: http://www.mydomain.com/news.php";
+$ind55 = "Layout Post Options";
+$ind56 = "Date format";
+$ind57 = "help";
+$ind58 = "Number of posts seen";
+$ind59 = "If your number of posts exceeds this number, the oldest posts will be moved to the archive.";
+$ind60 = "Number of headlines seen";
+$ind61 = "News Posts";
+$ind62 = "Allow bbcode";
+$ind63 = "Allow html";
+$ind64 = "Allow smilies";
+$ind65 = "Addon Options";
+$ind66 = "Full story link:";
+$ind67 = "Full story options";
+$ind68 = "Allow Full Story popup";
+$ind69 = "width:";
+$ind70 = "height:";
+$ind71 = "(in pixels; \"100\" is minimum)";
+$ind72 = "Scrollbars (only shown when needed)";
+$ind73 = "Resizeable";
+$ind74 = "Send to friend link:";
+$ind75 = "Send to friend (STF) options:";
+$ind75a = "Comment popup options:";
+$ind76 = "Allow STF form popup:";
+$ind76a = "Allow Comment form popup:";
+$ind77 = "Comments link:";
+$ind78 = "Comments Options:";
+$ind79 = "Allow newlines(&lt;br&gt;,\\n) in comments";
+$ind80 = "Wordfilter active in?";
+$ind81 = "Comments";
+$ind82 = "Posts";
+$ind83 = "Please check your options before submitting them:";
+$ind84 = "<b>Note:</b> all fields required to work";
+$ind85 = "Adding search capabilities to your news posts:";
+$ind86 = "Just add a link on the page where u want it to be present:<br>&lt;a href=&quot;http://www.mydomain.com/news/search.php&quot;&gt;Search for news&lt;/a&gt;<br>The script is located in your fusion news directory and is called &quot;search.php&quot;";
+$ind87 = "Wordwrap:";
+$ind88 = "Enable wordwrap";
+$ind89 = "max. length of a word (min. is \"5\")";
+$ind90 = "Fullstory link:";
+$ind91 = "Enable anti-flood";
+$ind91a = "Set allowed comment length (if set to 0, no limitation added):";
+$ind92 = "seconds between posts from same IP (min. is \"1\")";
+//END - admin section
+$ind93 = "short news";
+$ind94 = "full story";
+$ind95 = "Edit posts";
+$ind96 = "date";
+$ind97 = "delete?";
+$ind98 = "Your subject and news must be filled in";
+$ind99 = "News posted";
+$ind100 = "The news was posted. You can go to your <a href=\"$hurl\">main page</a>, or  <a href=\"$furl/index.php?id=view\">view news</a>.";
+$ind101 = "Posts edited";
+$ind102 = "The news was edited. You can go to your <a href=\"$hurl\">main page</a>, or  <a href=\"$furl/index.php?id=view\">view news</a>.";
+$ind103 = "You can only edit your own posts unless you're an admin or editor.";
+$ind104 = "News page";
+$ind105 = "The news and archive was built. You can go to your <a href=\"$hurl\">main page</a>, <a href=\"$furl/index.php?id=view\">view news</a>  or  <a href=\"$furl/archive.txt\">view archive</a>.";
+$ind106 = "login";
+$ind107 = "logout";
+$ind108 = "post news";
+$ind109 = "edit posts";
+$ind110 = "Add";
+$ind111 = "Time Offset:";
+$ind112 = "Current Server Time:";
+$ind113 = "Edit/Remove user";
+$ind114 = "field left blank";
+$ind115 = "login, email or passwordfield left blank";
+$ind116 = "Invalid email";
+$ind117 = "The email you entered isn't valid";
+$ind118 = "was added.";
+$ind119 = "Nickname:";
+$ind120 = "You changed your own profile, Fusion news logged you out so changes can take effect when u login again.";
+$ind121 = "Message options:";
+$ind122 = "is turned";
+$ind123 = "Selected posts deleted";
+$ind124 = "Selected posts are deleted [a total of";
+$ind124a = "post(s)]";
+$ind125 = "Click on the subject to edit the post";
+$ind126 = "Delete selected";
+$ind127 = "Deletes selected posts and their comments.";
+$ind128 = "News:";
+$ind129 = "Fullnews:";
+$ind130 = "Your subject and news must be filled in.";
+$ind131 = "Wordfilter(one expression per line, spaces allowed, case insensitive):";
+$ind132 = "Banned IP list:";
+$ind133 = "If you want to disallow people from posting comments, put <br>their IP's here (one IP number per line):";
+$ind134 = "Edit comments:";
+$ind135 = "Click on the subject to edit the posts comments";
+$ind136 = "count";
+$ind137 = "banned IP's updated";
+$ind138 = "Click on the subject to edit the comment";
+$ind139 = "name";
+$ind140 = "date";
+$ind141 = "no e-mail address specified";
+$ind142 = "edit comment";
+$ind143 = "ON";
+$ind144 = "OFF";
+$ind145 = "The comment must be filled in.";
+$ind146 = "Comment updated";
+$ind147 = "The edited comment was saved";
+$ind148 = "tresspassing";
+$ind149 = "You are not allowed to edit this comment";
+$ind150 = "Selected comments deleted";
+$ind151 = "Selected comments are deleted [a total of";
+$ind151a= "comment(s)]";
+$ind152 = "General help";
+$ind153 = "Updatecheck, please rate our script:";
+$ind154 = "Updatecheck:";
+$ind155 = "Your version";
+$ind156 = "Last version";
+$ind157 = "Rate Fusion News 3.6";
+$ind158 = "Excellent!";
+$ind159 = "Very Good";
+$ind160 = "Good";
+$ind161 = "Fair";
+$ind162 = "Poor";
+$ind163 = "main";
+$ind164 = "build news";
+$ind165 = "help/update";
+$ind166 = "manage comments";
+$ind167 = "manage user";
+$ind168 = "edit templates/headers/footers";
+$ind169 = "admin";
+$ind169a = "plugins";
+$ind170 = "Logged in as:";
+$ind171 = "not logged in";
+$ind172 = "Cast My Vote!";
+$ind173 = "wordfilter";
+$ind174 = "Update";
+$ind175 = "Login";
+$ind175a = "Edit the:";
+$ind176 = "header/footer";
+$ind177 = "header/footer comments";
+$ind178 = "news templates (short/full news)";
+$ind179 = "archive templates (short/full news)";
+$ind180 = "comment template";
+$ind181 = "headline/send to friend template";
+$ind181a = "Post per day template";
+$ind182 = "Add user";
+$ind183 = "Hide email?";
+$ind184 = "user:";
+$ind185 = "Fusion Preview";
+///////
+$ind186 = "Skin";
+$ind187 = "header";
+$ind188 = "footer";
+$ind189 = "news template";
+$ind190 = "full news template ({news} is replaced by {fullnews} and {shortnews})";
+$ind191 = "comment template";
+$ind192 = "headlines template";
+$ind192a = "post per day template";
+$ind193 = "normal";
+$ind194 = "editor";
+$ind195 = "admin";
+$ind196 = "wrong password";
+$ind197 = "the password you entered is wrong. <a href=\"javascript:history.back()\">go back</a>";
+$ind198 = "OFF";
+$ind199 = "ON";
+$ind200 = "Preview";
+$ind201 = "Add words to filter";
+$ind202 = "Wordfilter updated";
+$ind203 = "manage comments";
+$ind204 = "Manage/configure Uploads";
+$ind205 = "Upload Options";
+$ind206 = "Comment Options";
+$ind207 = "Manage Comments";
+$ind208 = "User Options";
+$ind209 = "Manage Users";
+$ind210 = "Smillie Options";
+$ind211 = "Manage Smillies";
+$ind212 = "Template/Header Options";
+$ind213 = "Manage Header/Templates";
+$ind214 = "Wordfilter Options";
+$ind215 = "Manage Wordfilter";
+$ind216 = "Files are being uploaded to";
+$ind217 = "These uploadfields apply to both short news and full news and are not mandatory";
+$ind218 = "Allowed file-extensions:";
+$ind219 = "Allowed filesize:";
+$ind220 = "Allow file uploads when posting news?";
+$ind221 = "Allowed extensions:";
+$ind222 = "(seperate each extension with a &quot;|&quot;. For example &quot;gif|jpg|jpeg|png&quot;)";
+$ind223 = "Maximum size(in Bytes):";
+$ind224 = "(1MB = 1024 kByte; 1 kByte = 1024 Bytes)";
+$ind225 = "De/Select all files for deletion.";
+$ind226 = "Filename";
+$ind227 = "Size";
+$ind228 = "Last modified";
+$ind229 = "Deleting";
+$ind230 = "failed";
+$ind231 = "was deleted succesfully";
+$ind232 = "Updates from FusionPHP:";
+$ind233 = "Your browser doesn't support &lt;iframe&gt;.";
+$ind234 = "Click here to see the document.";
+$ind235 = "Communication:";
+$ind236 = "Whenever you encounter a problem, visit our <a href=\"http://www.fusionphp.net/faq\">FAQ</a> page as a first resolve";
+$ind237 = "If you can't find the answer you need, visit our <a href=\"http://www.fusionphp.net/forums\">forums</a> for detailed help";
+$ind238 = "Use <a href=\"mailto:support@fusionphp.net\">email</a> communication as a last resort, since we are just making this script for fun and have a busy non-internet life.";
+$ind239 = "The <a href=\"http://www.fusionphp.net\">FusionPHP Team</a> would like to thank you for using Fusion News 3.6 Basic.";
+$ind240 = "Here will the available plugins be shown for you to administrate.";
+$ind241 = "Plugins Administration";
+$ind242 = "Change";
+$ind243 = "Add smillies";
+$ind244 = "add smillie";
+$ind245 = "smillie";
+$ind246 = "Upload smillies";
+$ind247 = "File to upload:";
+$ind248 = "Edit smillies";
+$ind248 = "Smillie added";
+$ind249 = "Your selected smillie was added";
+$ind250 = "Smillie Changed";
+$ind251 = "The changes to ur smillieconfiguration have been changed";
+$ind252 = "The file you tried to upload is too big!";
+$ind253 = "Folder not found";
+$ind254 = "No file to upload!";
+///$extensions will be replaced by the script with the allowed extensions
+$ind255 = "These type of files is not allowed for uploading!\r({";
+$ind255a = "} are allowed)";
+$ind256 = "The upload failed";
+//in the sence of: "Love.jpg succesfully uploaded"
+$ind257 = "succesfully uploaded.";
+$ind258 = "Your comment has reached the length allowed ($comlength). Characters that are beyond the allowed length will be ignored.";
+$ind259 = "A name aswell as a comment must be entered.";
+$ind260 = "Posts per day";
+$ind261 = "Cumulate posts posted on the same day.";
+$ind262 = "File uploads:";
+$ind263 = "Delete";
+$ind264 = "Total size of folder:";
+$ind265 = "Enable RSS";
+$ind266 = "Build an RSS(simple XML) file. (located in your main fusion news folder named 'fusionnews.xml')";
+$ind267 = "Link headlines to fullstory. (happens automaticly the headline refers to an item not shown on the mainpage.)";
+$ind268 = "Flip news";
+$ind269 = "Put latest news at the bottom";
+// this is the main menu, no need to edit enything here
+$lang_admin_skinl = <<<html
+&nbsp;[<a href="index.php?id=admin">$ind169</a>]
+html;
+$lang_admin_skinl2 = <<<html
+&nbsp;[<a href="index.php?id=admin">$ind169</a>Manage all admin settings]
+html;
+$lang_editor_skinl = <<<html
+&nbsp;[<a href="index.php?id=commentmanag">$ind166</a>]
+html;
+$lang_editor_skinl2 = <<<html
+&nbsp;[<a href="index.php?id=commentmanag">$ind166</a>];
+html;
+
+//°**************°
+//$  Search.php  $
+//°**************°
+$srch0    = "<b>Note:</b>Leave unwanted fields blank";
+$srch1    = "By user:";
+$srch2    = "By Subject:";
+$srch3    = "By Date, Between(<A onclick=\"flip('datehelp'); return false;\" href=\"#\"><B>Help</B></A>):";
+$srch4    = "and:";
+$srch5    = "To search by date, there are some codeconventions u need to know.";
+$srch6    = "Explenation";
+$srch7    = "Search from 10 sept 2000 to the current time(<A onclick=\"InsertHelp('10 September 2000','now'); return false;\" href=\"#\"><B>Example</B></A>)";
+$srch8    = "Search from 1 month 1 week... before the 10th sept 2001(<A onclick=\"InsertHelp('-1 month 1 week 2 days 4 hours 2 seconds','10 September 2001'); return false;\" href=\"#\"><B>Example</B></A>)";
+$srch9    = "From 3 days ago to last monday(<A onclick=\"InsertHelp('-3 days','last Monday'); return false;\" href=\"#\"><B>Example</B></A>)";
+$srch10   = "As you can see, searching by date is quite extensive.<br><b>BUT REMEMBER:</b><br>Always put the date, the furthest in the past, in the first field!!!<br><br>";
+$srch11   = "By News:";
+$srch12   = "By Full News:";
+$srch13   = "Case sensitive:";
+$srch14   = "Search in archives:";
+$srch15   = "<font color=red>You may not use \"/\" symbols in your search strings.<br>You may press the backbutton to change your search strings.</font>";
+$srch16   = "<font color=red>The timestamp you used is invalid. Please click the backbutton and change to a valid one.<br>Press help for more info.</font>";
+$srch17   = "<font color=red>The timestamp you used is invalid. Please click the backbutton and change to a valid one.<br>Press help for more info.</font>";
+$srch18   = "<font color=red>The range of time results in a negative number! The first field should hold the time the furthest in the past.</font>";
+$srch19   = "No post where found matching your search criteria";
+
+//°**************°
+//$   Send.php   $
+//°**************°
+$snd0     = "hi";
+$snd1     = "check out this news post";
+$snd2     = "from";
+$snd3     = "From:";
+$snd4     = "the article has been sent to";
+$snd5     = "Go back";
+
+//°*************°
+//$ Comment.php $
+//°*************°
+$com0     = "Off limits for direct use!";
+$com1     = "You didnt fill in a name or comment, pls hit the backbutton and fillout both fields";
+$com2     = "You entered an invalid email address, leave the email field blank or enter a valid email-address";
+$com3     = "You are banned.";
+//$com4 and $com5 are one sentence they become ex. ...last 60 seconds...
+$com4     = "You have posted in the last";
+$com5     = "seconds. You'll have to wait until this time has past to post again.";
+$com6     = "Thank you for posting a comment, you are being redirected to the commentspage.<br>If it takes to long press";
+$com7     = "here";
+$com8     = "You tried using a restricted name, if you are a registered editor, please check if you filled in the right password?";
+?>

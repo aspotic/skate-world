@@ -1,0 +1,309 @@
+                    /************************************************************************/
+                   /* Xmb Ultimate Portal v2.0.0                                           */
+                  /* ==================================================================== */
+                 /*  Copyright (c) 2003 - 2004 by FREEWILL46 (freewill_46@hotmail.com)   */
+                /*  http://www.fw46.com/eforum                                          */
+               /*======================================================================*/
+              /*       BASED ON PHP-NUKE: Advanced Content Management System          */
+              \* =====================================================================*\
+               \*      Copyright (c) 2002 by Francisco Burzi                           *\
+                \*     http://phpnuke.org                                               *\
+                 \________________________________________________________________________\
+
+
+Describtion:
+
+This is the version 2 of Xmb Ultimate Portal . More customized ..And it has many options ..
+
+1- Blocks. now you can add blocks as files or html content and mange them.
+2- Modules. You can add as many modules as you want...
+3- Random banner. Can be managed from admin panel.
+4- Administration Control Panel..
+
+<<- Added Modules --start->>
+
+1-Member Account Module .. This is a basic member account not perfect but Good for now. And every member will have it's own block.
+2-Reviews.. You can mange ,write, and brows Reviews..
+3-Sections.. Add your own Sections and mange them ..
+4-Submit News.. You can mange who can submit the news.
+5-News - ... The default module loaded on the main portal and it has many options , articles ,topics ,comments , and much more ...
+6-Surveys .. Add as many Surveys as you want and you can attach them to Articles ..
+7-Topics .. Sort and Mange Your topics and you can add as many as you want..
+<<- Added Modules  --end->>
+
+<<- Added Blocks --start->>
+
+1-Main menu.            [FILE]
+2-Forum menu.           [FILE]
+3-Modules.              [FILE]
+4-latest_replies.       [FILE]
+5-Administration.       [SYSTEM] For Administrator AND Super Administrator Only.
+6-Random member moods.  [FILE]
+7-Latest members.       [FILE]
+8-Top members.          [FILE]
+9-Login.                [FILE]
+10-Quick register.      [FILE]
+11-Search.              [HTML] Search on the net.
+12-Forum Staff.         [FILE]
+13-User's Custom Box.   [SYSTEM] Registered Members Only.
+14-Survey.              [FILE]
+15-Forum stats.         [FILE]
+
+these Blocks are active by default..
+
+<<- Added Blocks --end->>
+
+Inactive Blocks are..
+
+1-Forum Polls.
+2-Forum Search.
+3-Link Exchange /Scrolling.
+4-Old Articles /Scrolling.
+5-Sections Last post /Scrolling.
+6-Download Center Stats /Scrolling.
+7-Latest Replies /Scrolling.
+8-Whos Online.
+
+
+Compatibility: XMB v1.8 sp1 AND XMB V1.8 SP2
+
+Based ON PHP-NUKE By: Francisco Burzi
+
+Code Designed By: FREEWILL46
+
+Notice: Posting or distributing this hack, without permission from the author, is not permitted.
+
+NOTE: DO NOT UPLOAD ANY FILES RIGHT NOW ...
+
+.>If you have the old version of this hack  you have to uninstall it  ...
+
+Let's start removing the old codes from the modified files .[uninstalling  old version]. 
+
+EDIT CONFIG.PHP
+********************************************************************
+FIND:
+********************************************************************
+
+
+	$plugname[1] 	= 'Main forums';
+	$plugurl[1] 	= 'index.php?action=showindex';
+	$plugadmin[1] 	= 'no';
+
+
+********************************************************************
+REPLACE IT WITH THIS..
+********************************************************************
+
+
+	$plugname[1] 	= '';
+	$plugurl[1] 	= '';
+	$plugadmin[1] 	= 'no';
+
+*******************************************************************
+EDIT CP.PHP , CP2.PHP ,TOOLS.PHP
+*******************************************************************
+FIND AND DELETE:
+*******************************************************************
+
+ - <a href="portal_admin.php"><?=$P['portal_title']?></a>
+
+*******************************************************************
+EDIT ENGLISH.LANG.PHP
+*******************************************************************
+FIND AND DELETE:
+*******************************************************************
+
+
+// PORTAL LANG
+$lang_portal_adminmenu = "Portal admin menu";
+$lang_psettings = "Portal Settings";
+$lang_blocksdelete = "Delete blocks";
+$lang_ptitle = "What you want this to say in the navigation bar";
+$lang_newsfid = "The forum id you want to drag news from";
+$lang_newsdisplays = "Number of threads to list";
+$lang_mposts = "How many posts you would like to list";
+$lang_hotdate = "Numbers of days to look back for last post in hot topic";
+$lang_hottopics = "Number of hot topics to list";
+$lang_dgif = "The default smilie if one isn't present in the post this one will be used";
+$lang_pollfid = "This is where your polls are pulled from";
+$lang_newmebers = "This is how many members to list";
+$lang_randommod = "The number of members to list randomly who have moods";
+$lang_topmembers = "Number of Top members to list";
+$lang_postsnull = "Don't pull posts from these fids separated with commas";
+$lang_radio_block = "Radio block";
+$lang_top_members = "Top members block";
+$lang_members_mods = "Members mod";
+$lang_showavatar = "Show top members avatar";
+$lang_enabled = "Enabled";
+$lang_disabled = "Disabled";
+$lang_psubmitchanges = "Submit changes";
+$lang_pundochanges = "Undo changes";
+$lang_noportaltitle = "You must enter a title name";
+$lang_nodgif = "You must enter a default icon name";
+$lang_settingsupdated = "All settings has been updated successfully";
+$lang_blockedit = "Edit";
+$lang_blockdelete = "Delete";
+$lang_selectblock = "Select block";
+$lang_noselectblock = "You have to select a block first";
+$lang_blockdeleted = "Block has been deleted successfully ";
+$lang_deleteps = "P.S: If you want to delete only the block  select from the Portal blocks <br> if you want to delete templates and block so you have to select both and then press delete..";
+$lang_blocks = "Portal blocks";
+$lang_blocktemplates = "Portal template";
+$lang_blocksedit = "Edit blocks";
+$lang_blocksadd = "Add blocks";
+$lang_blockmanager = "Block edit manager";
+$lang_blockname = "Block name";
+$lang_direction = "Display direction";
+$lang_status = "Block status";
+$lang_left = "Left";
+$lang_right = "Right";
+$lang_center = "Center";
+$lang_off = "Off";
+$lang_displayorder = "Displayorder";
+$lang_noname = "You must enter a name";
+$lang_notemplate = "You can't add empty template";
+$lang_bedited = "Block has been updated successfully";
+$lang_badded = "New block has been added successfully";
+$lange_namexist = "Block name already exist";
+$lang_blockadd = "Adding new block";
+$lang_addnewblock = "Add new block";
+$lang_shoutboxmanager = "Shoutbox Manager";
+$lang_editpages = "Edit & Delete pages ";
+$lang_addpages = "Add new pages";
+$lang_pagesmanager = "Pages manager";
+$lang_pagetitle = "Page title";
+$lang_selectpages = "Select page";
+$lang_nopages = "you have to select a page first";
+$lang_pagesupdated = "Page has been updated successfully";
+$lang_pagesdeleted = "Page has been deleted successfully";
+$lang_addingnew = "Adding new pages";
+$lang_addnewpages = "Add new";
+$lang_notitle = "You must enter a page title";
+$lange_nocontent = "You must enter a content for your new page";
+$lang_pagesadded = "Page has been created sccessfully";
+$lang_expirein = "Expiration in";
+$lang_hours = "Hours";
+$lang_expirehours = "Expiration: Less than 1 hour";
+$lang_mviewadmins = "View: Administrators Only";
+$lang_unlimited = "Unlimited";
+$lang_mviewusers = "View: Registered Users Only";
+$lang_mviewstaff = "View: Staff Users Only";
+$lang_mviewall = "View: All Visitors";
+$lang_madminnews = "Admin news";
+$lang_mid = "Id";
+$lang_mtitle = "Message Title";
+$lang_mwhoview = "Who view";
+$lang_mmactive = "Active";
+$lang_mfunctions = "Functions";
+$lang_myes = "Yes";
+$lang_mno = "No";
+$lang_maviewall = "All Visitors";
+$lang_maviewusers = "Registered Users Only";
+$lang_maviewstaff = "Staff Users Only";
+$lang_maviewadmins = "Administrators Only";
+$lang_maddmessage = "Add New Message";
+$lang_messagetitle = "Message title";
+$lang_messagecontent = "Message content";
+$lang_expirationdate = "Expiration Time";
+$lang_mdays = "Day(s)";
+$lang_mactive = "Active?";
+$lang_mwhocanview = "Who can view this message?";
+$lang_maddnewmessage = "Add Message";
+$lang_meditmessage = "Message Edit";
+$lang_mchangedate = "Change start date to today?";
+$lang_mifyactive = "(If you Active this Message now, the start date will be today)";
+$lang_mmsave = "Save Changes";
+$lang_mdeletemessage = "Deleting message";
+$lang_mdeleteconfirm = "Are you sure you want to delete the selected message ";
+
+*************************************************************************
+EDIT HEADER.PHP 
+*************************************************************************
+FIND AND DELETE:
+*************************************************************************
+
+, 'portal_templates', 'portal_config', 'portal_shoutbox', 'portal_pages', 'portal_pages_count', 'portal_message'
+
+
+*************************************************************************
+FIND AND DELETE:
+*************************************************************************
+
+// BEGIN PORTAL FUNCTIONS
+ 
+$forumurl = "<a href=\"index.php?action=showindex\">Forums Page</a>";
+switch($action) {
+    case 'showindex':
+    break;
+    default:
+    $action = $action;
+    break;
+}
+if(isset($full_url)) {
+$db->query("UPDATE $table_portal_config SET orderview='on'");
+}
+
+if($action == "showindex") {
+$db->query("UPDATE $table_portal_config SET orderview='off'");
+}
+
+// END PORTAL FUNCTIONS
+
+**************************************************************************
+FIND AND DELETE:
+**************************************************************************
+
+// BEGIN PORTAL CONFIG
+$pquery = $db->query("SELECT * FROM $table_portal_config");
+$P = $db->fetch_array($pquery);
+// END PORTAL CONFIG
+
+**************************************************************************
+EDIT INDEX.PHP 
+**************************************************************************
+FIND AND DELETE:
+**************************************************************************
+
+if($P['orderview'] == "on") {
+include_once "./portal.php";
+eval("\$portal_home = \"".template("portal_home")."\";");
+$portal_home = stripslashes($portal_home);
+echo $portal_home;
+}
+if($P['orderview'] == "off") {
+
+**************************************************************************
+FIND:
+**************************************************************************
+
+eval("\$index = \"".template("index")."\";");
+$index = stripslashes($index);
+echo $index;
+}
+
+**************************************************************************
+REPLACE IT WITH THIS :
+**************************************************************************
+
+eval("\$index = \"".template("index")."\";");
+$index = stripslashes($index);
+echo $index;
+
+--------------------------------------------------------------------------
+
+If you have or not the old version Upload install.php ONLY to you forum folder
+
+Run the installation file with url like this ..
+
+http://yourdomainname/forumfolder/install.php
+
+
+And follow the instructions.
+
+
+----------------------------------------------------------------------------   
+
+
+
+
+

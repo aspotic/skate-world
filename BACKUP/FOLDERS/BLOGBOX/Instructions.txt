@@ -1,0 +1,46 @@
+; ----------------------------------------------------- 
+;             Radio.Blog, version 2.0 Beta
+;             Author: Astro @ Websucks.net
+;             Mail : astro@websucks.net
+;       Updates/Blog: http://www.radioblogclub.com/
+; ----------------------------------------------------- 
+
+
+Radio.Blog Instructions
+-----------------------
+
+
+01.Install Radio.Blog
+---------------------
+- Copy the radio.blog directory on your web server.
+- Edit config.xml to change the color of the skin.
+
+
+02.Creat a SWF Sound
+--------------------
+- Copy your MP3 into the creat.sound directory.
+- Double-click on convert64.bat (this will convert all your MP3 files in RBS format files into the sounds directory)
+- Wait
+- Copy your RBS files into your sounds directory on your web server.
+- refresh and enjoy.
+ 
+
+03.How To
+---------
+- Include radio.blog in my webpage:
+Insert this code in your page:
+<iframe src="/radio.blog/index.php" name="radio" scrolling="no" frameborder="0" width="222" height="300"></iframe>
+ 
+- Autostart a track:
+add ?autoplay=# in front of your url, for example to autostart track number 2:
+http://www.domaine.com/radio.blog/?autoplay=2
+ 
+- Put a custom background:
+add a background to your index.php file and set bg_opacity = 0 in the config.ini file.
+
+
+04.Register your radio.blog on radioblogclub.com
+------------------------------------------------------
+- Creat your account (click on "Join the club").
+- Edit your profile and enter your radio.blog number.
+/!\ If your radio.blog doesn't appear in the search page, wait for few days.

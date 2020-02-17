@@ -1,0 +1,190 @@
+Modification Name: Avatar Gallery
+
+Description: This hack will add a secured avatar gallery to your board which is configurable via the admin panel.
+
+Version Use: XMB 1.9.1 Nexus (RC1)
+
+Coyright: Copyright (c) 2004 The XMBSource Group. All rights reserved.
+
+Usage Agreement: Posting and/or distributing the content within this hack or any derivative of this hack is not permitted.
+
+Install Note: Please be sure to backup all effected files, templates & databases before proceeding with this hack.
+
+Disclaimer of Warranty: ALL Software is provided on an "AS IS" basis, without warranty of any kind, including without limitation the warranties of merchantability, fitness for a particular purpose and non-infringement. The entire risk as to the quality and performance of the Software is borne by you. Should the Software prove defective, you and not XMBSource.com assume the entire cost of any service and repair. In addition, the security mechanisms implemented by XMBSource.com Software have inherent limitations, and you must determine that the Software sufficiently meets your requirements.
+
+Title: Title, ownership rights, and intellectual property rights in the Software shall remain with XMBSource.com. The Software is protected by copyright laws and treaties.
+
+Termination: This Agreement will terminate automatically upon failure to comply with the limitations described herein or on written notice from an authorized representative of XMBSource.com. On termination, you must destroy all copies of the Software within 48 hours.
+
+=======================================================================================================================
+Step 1:
+
+Go To Administration Panel->Insert Raw SQL->Copy & Paste SQL & Click Submit
+
+ALTER TABLE `$table_settings` ADD `avatars` SET('on','off') NOT NULL default 'on';
+ALTER TABLE `$table_settings` ADD `avatars_perpage` CHAR(2) NOT NULL default '20';
+ALTER TABLE `$table_settings` ADD `avatars_perrow` CHAR(2) NOT NULL default '5';
+
+=======================================================================================================================
+Step 2:
+
+Edit File: English.lang.php
+
+Find Code:
+
+?>
+
+Add Code Above:
+
+$lang['avatars'] = "Avatars";
+$lang['avatargallery'] = "Avatar Gallery";
+$lang['avatargallerystatus'] = "Avatar Gallery Status:";
+$lang['avatarsperpage'] = "Avatars Per Page:";
+$lang['avatarsperrow'] = "Avatars Per Row:";
+$lang['avatarpage'] = "Page:";
+$lang['onlineavatars'] = "Viewing Avatar Gallery";
+$lang['updateavatar'] = "Update Avatar";
+$lang['avatarnologin'] = "You are not logged in.";
+$lang['folderdoesnotexist'] = "The specified folder does not exist.";
+$lang['avatarfeaturedisabled'] = "This feature of the board has been disabled.";
+$lang['avatarupdated'] = "Your avatar has been updated successfully.";
+$lang['noavatarselected'] = "You must first choose an avatar.";
+$lang['noavatarsinfolder'] = "There are no avatars to display in this folder.";
+$lang['currentavatarmsg'] = "The image below is your current avatar.";
+$lang['welcomeavatarmsg'] = "Welcome to the $bbname - Avatar Gallery!";
+$lang['navigateavatarmsg'] = "By navigating through the folders on the left, you can choose a new avatar by browsing our gallery and making your selection.";
+
+=======================================================================================================================
+Step 3:
+
+Edit File: header.php
+
+Find Code:
+
+    // 'Forum Rules'-link
+    if($SETTINGS['bbrules'] == "on"){
+        $links[] = "<img src=\"$imgdir/bbrules.gif\" alt=\"$lang[altrules]\" border=\"0\" /> <a href=\"faq.php?page=forumrules\"><font class=\"navtd\">$lang[textbbrules]</font></a>";
+    }
+
+Add Code Below:
+
+	// Avatar Gallery -link
+	if ($xmbuser && $SETTINGS['avatars'] == "on") {
+		$links[] = "<img src=\"$imgdir/avatars.gif\" alt=\"$lang[avatars]\" border=\"0\" /> <a href=\"avatars.php\"><font class=\"navtd\">$lang[avatars]</font></a>";
+	}
+
+=======================================================================================================================
+Step 4:
+
+Go To Administration Panel->Templates->Create Template Name->avatars
+
+<form method="post">
+<table cellspacing="0" cellpadding="0" border="0" width="$tablewidth" align="center">
+<tr>
+<td bgcolor="$bordercolor">
+<table border="0" cellspacing="$borderwidth" cellpadding="$tablespace" width="100%">
+<tr>
+<td class="category" align="left" colspan="2"><font color="$cattext"><strong>$lang[avatargallery]</strong></font></td>
+</tr>
+<tr>
+<td align="left" class="tablerow" bgcolor="$altbg2" colspan="2">$multipage&nbsp;</td>
+</tr>
+<tr>
+<td class="tablerow" bgcolor="$altbg1" valign="top" width="25%"><img src="$imgdir/topav.gif" border="0" align="absmiddle" alt="$lang[altavatar]" /> <a href="avatars.php"><strong>$lang[avatars]</strong></a>$subfolders</td>
+<td class="tablerow" bgcolor="$altbg2" valign="top" width="75%">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+$avatars
+</table>
+</td>
+</tr>
+<tr>
+<td align="left" class="tablerow" bgcolor="$altbg2" colspan="2">$multipage&nbsp;</td>
+</tr>
+$submitbutton
+</table>
+</td>
+</tr>
+</table>
+</form>
+
+=======================================================================================================================
+Step 5:
+
+Edit File: cp.php
+
+Find Code:
+
+        $avchecked[0] = $avchecked[1] = $avchecked[2] = false;
+
+        if(!empty($avatarlist)){
+            $avchecked[1]  = true;
+        }elseif(!empty($avataroff)){
+            $avchecked[2]   = true;
+        }else{
+            $avchecked[0]    = true;
+        }
+
+Add Code Below:
+
+		$avatars_on = $avatars_off = '';
+		if ($SETTINGS['avatars'] == "on") {
+			$avatars_on = " selected";
+		} else {
+			$avatars_off = " selected";
+		}
+
+Find Code:
+
+		printsetting3($lang['textavastatus'], 'avastatusnew', array($lang['texton'], $lang['textlist'], $lang['textoff']), array('on', 'list', 'off'), $avchecked, false);
+
+Add Code Below:
+
+		printsetting1($lang['avatargallerystatus'], "avatarsnew", $avatars_on, $avatars_off, $langfile);
+		printsetting2($lang['avatarsperpage'], "avatarsperpagenew", $SETTINGS['avatars_perpage'], "2");
+		printsetting2($lang['avatarsperrow'], "avatarsperrownew", $SETTINGS['avatars_perrow'], "2");
+
+Find Code:
+
+$db->query("UPDATE $table_settings SET
+
+Add To End Of Statement Just Before: ");
+
+, avatars='$avatarsnew', avatars_perpage='$avatarsperpagenew', avatars_perrow='$avatarsperrownew'
+
+=======================================================================================================================
+Step 6:
+
+Edit File: memcp.php
+
+Find Code:
+
+echo "<td bgcolor=\"$altbg2\" width=\"15%\" class=\"ctrtablerow\"><a href=\"#\" onclick=\"Popup('buddy.php?', 'Window', 450, 400);\">" .$lang['textbuddylist']. "</a></td>";
+
+Add Code Below:
+
+echo "<td bgcolor=\"$altbg2\" width=\"10%\" class=\"ctrtablerow\"><a href=\"avatars.php\">" .$lang['avatars']. "</a></td>";
+
+=======================================================================================================================
+Step 7:
+
+Edit File: misc.php
+
+Find Code:
+
+    }elseif(false !== strpos($url, "/topicadmin.php")){
+        $location = $lang['onlinetopicadmin'];
+
+Add Code Below:
+
+    }elseif(false !== strpos($url, "/avatars.php")){
+        $location = $lang['onlineavatars'];
+
+=======================================================================================================================
+Step 8:
+
+Upload the 3 images "openav.gif", "closeav.gif", avatars.gif, and "topav.gif" to all theme folders.
+
+Note: All avatars should be saved to the "images/avatars" folder of your board or sub-folders within this folder.
+
+=======================================================================================================================

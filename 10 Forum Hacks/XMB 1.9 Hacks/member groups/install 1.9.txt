@@ -1,0 +1,153 @@
+INSTALL INSTRUCTIONS FOR MEMBERGROUPS ON XMB 1.9.
+
+MAKE SURE YOU USE THE FILES IN THE /1.9 DIRECTORY IN THIS ARCHIVE !!
+
+If you are not reading this on a message board, you need only the text BETWEEN the [code] and [/code] markers.
+You also want word wrap OFF
+
+UPGRADE FROM MEMBERGROUPS 0.17 or before:
+1. Delete mg.lang.php
+2. Overwrite mg.php with the new one
+3. Copy lang-mg.php to your lang folder
+
+NOTE ON UPGRADING
+Since this is the first version for 1.9, the only way you would have to upgrade is if you installed an earlier version of MG on an earlier version of XMB.
+If you then upgraded that version of XMB, it could still have MG data in the $table_membergroups table. To upgrade and preserve this data so you can use it in 1.9, follow the steps below:
+You can always just delete the membergroups table and do a new install...
+
+UPGRADE FROM MEMBERGROUPS 0.7 or before:
+1. Run this mysql in the admin panel upgrades section to edit the table.(you will need to change this if you used a $tablepre other than xmb_ but the mod itself will account for the $tablepre)
+[code]
+ALTER TABLE `xmb_membergroups` ADD `adminlist` TEXT;
+[/code]
+2. Do all steps below except #2
+
+UPGRADE FROM 0.8+
+1. Do all steps below except #2
+
+NEW INSTALL
+Follow all steps below.
+
+BACK UP FIRST !!
+
+#1 copy the file mg.php into your xmb dir and the file lang-mg.php into your lang dir. If you have a previous install, delete mg.lang.php as it is now called lang-mg.php instead.
+
+#2 Run this mysql in the admin panel upgrades section to create the table. (you will need to change this if you used a $tablepre other than xmb_ but the mod itself will account for the $tablepre)
+
+[code]
+CREATE TABLE xmb_membergroups (
+	mgid smallint(4) NOT NULL auto_increment,
+	groupname varchar(25) NOT NULL default '',
+	description text,
+	userlist text,
+	adminlist text,
+	PRIMARY KEY  (mgid)
+) TYPE=MyISAM;
+[/code]
+
+#3 in functions.php, Select everything from (INCLUDING) the line
+
+[code]
+function privfcheck($private, $userlist) {
+[/code]
+
+up to, BUT NOT INCLUDING the line
+
+[code]
+function forum($forum, $template) {
+[/code]
+
+(ie the whole privfcheck routine).
+Replace it with:
+
+[code]
+function privfcheck($private, $userlist) {
+    global $self, $xmbuser, $hideprivate, $db, $mg_status_on, $mg_status_symbol, $table_membergroups;
+
+    if($self['status'] == 'Super Administrator'){
+	    return true;
+    }
+    if($private == 2 && X_ADMIN) {
+        return true;
+    } elseif($private == 3 && X_STAFF) {
+        return true;
+    } elseif($private == 1 && $userlist == '') {
+        return true;
+    } elseif($userlist != '') {
+        $user = explode(',', $userlist);
+        $mg_xmbuser=strtolower($xmbuser);
+        $mg_status=strtolower($self['status']);
+        // cycle thru users in forum's userlist
+        for($i=0;$i<count($user);$i++){
+	        $user[$i]=strtolower(trim($user[$i]));
+		    if($user[$i] != ''){ // only continue checking user if it isn't blank...
+		        // Is the user directly listed ?
+	            if($mg_xmbuser == $user[$i]){
+	                return true;
+	            } elseif(($mg_status_on == true) && ($mg_status_symbol.$mg_status==$user[$i]) && ($mg_status_symbol != '')){ // Is statuscheck enabled ? is it a status ? (Starts with > normally)
+		         	return true;
+	            } else {	// is it a membergroup ?
+					// Pull all entries from membergroups table that match the entry in the list. ($user[x]) ...
+					$query = $db->query("SELECT `groupname`,`userlist` FROM $table_membergroups WHERE `groupname` = '$user[$i]'");
+					 // ...cycle them thru $mgtmparray
+					while($mgtmparray = $db->fetch_array($query)) {
+						// trim them to remove ",", " " etc and convert them to lower case.
+						$mgtmparray[groupname]=strtolower(trim($mgtmparray[groupname]));
+						// check if the groupname matches the entry in the userlist
+						if($user[$i]==$mgtmparray[groupname]){
+							// If so, put the group userlist in $groupmember
+							$groupmember = explode(",", $mgtmparray[userlist]);
+							// Cycle thru it...
+							for($j=0;$j<count($groupmember);$j++){
+								// trim each entry
+								$groupmember[$j]=strtolower(trim($groupmember[$j]));
+								// Is statuscheck enabled ? is it a status ?  Is user that status ? (Starts with > normally)
+								if(($mg_status_on == true) && ($mg_status_symbol.$mg_status==$groupmember[$j]) && ($mg_status_symbol != '') && ($groupmember[$j]!='')){
+									return true;
+								} else {
+									if(($mg_xmbuser==$groupmember[$j]) && ($groupmember[$j]!='')){ // does it match the user's username ?
+										return true;
+									}
+								}
+							}
+						}
+					}
+	            }
+        	}
+        }
+    }else{
+        return false;
+    }
+}
+[/code]
+
+#4 Find in header.php:
+
+[code]
+$tables = array(
+[/code]
+
+at end before ); add :
+
+[code]
+, 'membergroups'
+[/code]
+
+
+#5 in config.php, in the plugins section, add a new entry:
+[code]
+    $plugname[$i]    = 'Membergroups';
+    $plugurl[$i]     = 'mg.php';
+    $plugadmin[$i]   = false;
+    $plugimg[$i]     = '';
+    $i++;
+    $mg_status_on = false;
+    $mg_status_symbol=">";
+[/code]
+
+You may also change value of $mg_status_on to true to enable you to list statuses in group lists (eg >Administrator)
+If you do this, you may also change $mg_status_symbol to something other than ">".
+Any userlist entry starting with this symbol will be interpreted as a status (eg >Member, >Administrator, >Moderator)
+If you use this feature it is advised you read about it in the manual in the /docs/ directory.
+
+You can also set plugadmin to true if you will not be letting non-admin users manage groups.

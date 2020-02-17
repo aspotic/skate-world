@@ -1,0 +1,1 @@
+[22-Jun-2004 11:31:27] PHP Warning:  mysql_connect(): Access denied for user: 'skate_tagbord@localhost' (Using password: YES) in /home/skate/public_html/poll/admin/polldb.php on line 4

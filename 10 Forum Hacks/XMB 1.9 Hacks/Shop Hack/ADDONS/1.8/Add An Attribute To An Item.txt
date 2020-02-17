@@ -1,0 +1,92 @@
+Description: This is information on how to add a special attibute to an item, in this case the attribute is power.  This can be used if a user ever wants to develop this hack.
+
+Compatibility: XMB v1.8
+
+Code By: nfpunk/Flixon
+
+* run in upgrade
+--------------------------------------------------------------------------------
+ALTER TABLE xmb_shop_items ADD power INT(10) NOT NULL;
+--------------------------------------------------------------------------------
+
+* edit shop_admin.php & shop_edit.php
+
+FIND
+--------------------------------------------------------------------------------
+$stock		= checkInput($stock, '', '', 'javascript');
+--------------------------------------------------------------------------------
+
+ADD BELOW
+--------------------------------------------------------------------------------
+$power		= checkInput($power, '', '', 'javascript');
+--------------------------------------------------------------------------------
+
+FIND
+--------------------------------------------------------------------------------
+$db->query("INSERT INTO $table_shop_items VALUES(
+--------------------------------------------------------------------------------
+
+ADD TO END JUST BEFORE )");
+--------------------------------------------------------------------------------
+, '$power'
+--------------------------------------------------------------------------------
+
+* edit shop_admin_item_edit & shop_edit_item_edit templates
+
+FIND
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" class="tablerow">$lang_shop_textstock:</td>
+<td bgcolor="$altbg2" class="tablerow"><input type="text" name="stock" value="$item[stock]" size="5" class="text"></td>
+</tr>
+--------------------------------------------------------------------------------
+
+ADD BELOW
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" class="tablerow">$lang_shop_textpower:</td>
+<td bgcolor="$altbg2" class="tablerow"><input type="text" name="power" value="$item[power]" size="5" class="text"></td>
+</tr>
+--------------------------------------------------------------------------------
+
+* edit shop_admin_item_new & shop_edit_item_new templates
+
+FIND
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" class="tablerow">$lang_shop_textstock:</td>
+<td bgcolor="$altbg2" class="tablerow"><input type="text" name="stock" size="5" class="text"></td>
+</tr>
+--------------------------------------------------------------------------------
+
+ADD BELOW
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" class="tablerow">$lang_shop_textpower:</td>
+<td bgcolor="$altbg2" class="tablerow"><input type="text" name="power" size="5" class="text"></td>
+</tr>
+--------------------------------------------------------------------------------
+
+* edit shop_items template
+
+FIND
+--------------------------------------------------------------------------------
+<td colspan="5" class="header">$set[title]: $cat[catname]</td>
+--------------------------------------------------------------------------------
+
+REPLACE WITH (Note the change, you need to increase the column span by 1 each time you add a new attribute you wish tobe displayed)
+--------------------------------------------------------------------------------
+<td colspan="6" class="header">$set[title]: $cat[catname]</td>
+--------------------------------------------------------------------------------
+
+* edit shop_items_row template
+
+FIND
+--------------------------------------------------------------------------------
+<td bgcolor="$altbg1" align="center" class="tablerow">$item[sold]</td>
+--------------------------------------------------------------------------------
+
+ADD BELOW
+--------------------------------------------------------------------------------
+<td bgcolor="$altbg1" align="center" class="tablerow">$item[power]</td>
+--------------------------------------------------------------------------------

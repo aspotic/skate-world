@@ -1,0 +1,1 @@
+Just replace the chat.php with this file !

@@ -1,0 +1,246 @@
+# phpMyAdmin SQL Dump
+# version 2.5.6
+# http://www.phpmyadmin.net
+#
+# Host: localhost
+# Generation Time: Aug 25, 2004 at 10:37 PM
+# Server version: 4.0.18
+# PHP Version: 4.3.7
+# 
+# Database : `skate_content`
+# 
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `articles`
+#
+
+CREATE TABLE `articles` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `articles`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `bearings`
+#
+
+CREATE TABLE `bearings` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `bearings`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `clinks`
+#
+
+CREATE TABLE `clinks` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` varchar(80) default NULL,
+  `explanation` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `clinks`
+#
+
+INSERT INTO `clinks` VALUES (1, 'Lissa Explains All', 'http://www.lissaexplains.com', '');
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `computers`
+#
+
+CREATE TABLE `computers` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `computers`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `decks`
+#
+
+CREATE TABLE `decks` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `decks`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `games`
+#
+
+CREATE TABLE `games` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `games`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `hardware`
+#
+
+CREATE TABLE `hardware` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `hardware`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `links`
+#
+
+CREATE TABLE `links` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` varchar(80) default NULL,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `links`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `more`
+#
+
+CREATE TABLE `more` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `more`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `software`
+#
+
+CREATE TABLE `software` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `software`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `stories`
+#
+
+CREATE TABLE `stories` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `stories`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `trucks`
+#
+
+CREATE TABLE `trucks` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `trucks`
+#
+
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `wheels`
+#
+
+CREATE TABLE `wheels` (
+  `id` mediumint(10) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `url` text,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `wheels`
+#

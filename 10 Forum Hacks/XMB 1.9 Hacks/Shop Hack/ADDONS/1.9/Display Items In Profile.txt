@@ -1,0 +1,46 @@
+Description: This addon will display items purchased in members profiles.
+
+Compatibility: XMB v1.9
+
+Code Designed By: nfpunk/Flixon
+
+* edit member.php
+
+FIND
+--------------------------------------------------------------------------------
+$memberinfo = $db->fetch_array($db->query("SELECT * FROM $table_members WHERE username='$member'"));
+--------------------------------------------------------------------------------
+
+ADD BELOW
+--------------------------------------------------------------------------------
+$items = "";
+
+$itemsquery = $db->query("SELECT * FROM $table_member_items WHERE uid='$memberinfo[uid]'");
+
+while($memberitem = $db->fetch_array($itemsquery)) {
+	$itemquery = $db->query("SELECT * FROM $table_shop_items WHERE id='$memberitem[iid]'");
+	$item = $db->fetch_array($itemquery);
+
+	if($item[imageurl] == "") {
+		$items .= "<img src=\"$imgdir/folder.gif\" border=\"0\" alt=\"$item[itemname]\"> "; // You may wish to change this
+	} else {
+		$items .= "<img src=\"$item[imageurl]\" border=\"0\" alt=\"$item[itemname]\"> ";
+	}
+}
+--------------------------------------------------------------------------------
+
+* edit member_profile template
+
+FIND
+--------------------------------------------------------------------------------
+<tr><td bgcolor="$altbg1" valign="top" class="tablerow">$lang[userprofilemood]</td>
+<td bgcolor="$altbg2" class="tablerow">$memberinfo[mood]</td></tr>
+--------------------------------------------------------------------------------
+
+ADD BELOW
+--------------------------------------------------------------------------------
+<tr>
+<td bgcolor="$altbg1" valign="top" class="tablerow">$lang_shop_textitems:</td>
+<td bgcolor="$altbg2" class="tablerow">$items</td>
+</tr>
+--------------------------------------------------------------------------------

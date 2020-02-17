@@ -1,0 +1,87 @@
+To have the option "Who's Chatting - Who is currently in the chatroom"
+
+Follow these simple steps below.
+
+Original Coding: xmbsource.co.uk
+
+------------------------------------------------
+Open index.php
+
+
+Find:
+	// Start Whos Online and Stats
+
+Add Above:
+
+// Start Whos Chatting
+	$oldtime = time() - 30;
+	$db->query("DELETE FROM xmb_chat WHERE type='user' AND datetime <$oldtime");
+	
+	$userlist = $db->query("SELECT * FROM xmb_chat WHERE type='user' ORDER BY jointime ASC");
+	
+	$fistTime = 0;
+	while($users = $db->fetch_array($userlist)){
+	
+	$usertime = $users['jointime'];
+	$onlinename = $users['user'];
+	
+		if($firstTime == 0)
+			$p1 = "<b>";
+		else
+			$p1 = ", <b>";
+		$p2 = "</b>";
+	if($onlinename == $username){
+		$shown = 1;
+		if($firstTime == 0)
+			$p1 = "<b>";
+		else
+			$p1 = ", <b>";
+		$p2 = "</b>";
+	
+	}
+	
+	$chatters .= "<a href=\"member.php?action=viewpro&member=$onlinename\" target=\"viewuser\">$p1$onlinename$p2</a>";
+	$firstTime = 1;
+	}
+// End Whos Chatting
+
+------------------------------------------------
+Open index_whosonline Template.
+
+
+Find:
+
+<td bgcolor="$altbg2" colspan="5" class="mediumtxt">$memtally</td>
+</tr>
+
+
+Add Below:
+
+<tr>
+<td colspan="6" class="category" $catbgcode><b><a href="javascript: chatlaunch();"><font color="$cattext">Who's Chatting</font></a></b> - Who is currently in the chatroom</td>
+</tr>
+<tr>
+<td bgcolor="$altbg1" align="center" class="tablerow"><img src="$imgdir/online.gif"></td>
+<td bgcolor="$altbg2" colspan="5" class="mediumtxt">$chatters</td>
+</tr>
+
+------------------------------------------------
+Open header Template.
+
+Find:
+
+$css
+
+Add Below:
+
+<script language="JavaScript">
+
+function chatlaunch()
+{
+	window.open("chat.php","chat","width=600,height=400,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no");
+}
+</script>
+
+------------------------------------------------
+
+Enojy !

@@ -1,0 +1,22 @@
+Description: This addon is the member referral hack and gives a member an amount decided in the shop admin settings for referring a member.
+
+Note: You must have the referral hack (http://www.computerelated.com/forum/viewthread.php?tid=62) for this to work.
+
+Compatibility: XMB v1.8
+
+Code Designed By: nfpunk/Flixon
+
+* edit member.php
+
+FIND
+--------------------------------------------------------------------------------
+$db->query("UPDATE $table_members SET referrals=referrals+1, referred='$referlist' WHERE username='$refer'");
+--------------------------------------------------------------------------------
+
+REPLACE WITH
+--------------------------------------------------------------------------------
+$setquery = $db->query("SELECT mpr FROM $table_shop_settings");
+$mpr = $db->result($setquery, 0);
+
+$db->query("UPDATE $table_members SET referrals=referrals+1, referred='$referlist', money=money+'$mpr' WHERE username='$refer'");
+--------------------------------------------------------------------------------

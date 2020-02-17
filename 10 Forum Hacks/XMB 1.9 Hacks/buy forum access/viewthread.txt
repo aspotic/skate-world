@@ -1,0 +1,213 @@
+
+[Addon] Shop Features -» Buy Access to a forum...
+
+Description:
+This will add the option to the Shop for people to buy access to a (or multiple) forum(s) where you restricted access to.
+
+Compatible: XMB 1.9 Nexus & SHop Hack v1.2
+
+Modification by: 
+FunForum
+
+Note:
+ - Always backup the templates and PHP files you are going to modify before doing an update/mod/etc.
+ - This mod has been succesfully tested on XMB 1.9 Nexus Final.
+
+
+
+Create Template: shop_confirm
+
+Add:
+------------------------------------------------------------------------------------------
+<form method="post" action="shop_item.php?iid=$iid">
+<table cellspacing="0" cellpadding="0" border="0" width="50%" align="center">
+  <tr>
+    <td bgcolor="$bordercolor">
+    <table cellspacing="$borderwidth" cellpadding="$tablespace" width="100%">
+      <tr>
+        <td align="center" class="header">$item[itemname]</td>
+      </tr>
+      <tr>
+        <td bgcolor="$altbg2" class="tablerow">Are you sure you want to buy this item?</td>
+      </tr>
+      <tr>
+        <td bgcolor="$altbg1" class="tablerow" align="center">
+          <table width="100%"><tr><td width="50%" align="center"> <input type="submit" name="yessubmit" value="Yes" class="submit"> </td><td width="50%" align="center"> <input type="submit" name="nosubmit" value="No" class="submit"> </td></tr></table>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+</form>
+------------------------------------------------------------------------------------------
+
+This template I added to almost all Features in my shop.
+People kept asking they wanted to extra confirm their thing and sometimes they clicked a wrong link and this saved me the hassle from having to give them their money back.
+
+
+
+
+Edit PHP File: shop_item.php
+
+Find:
+------------------------------------------------------------------------------------------
+	// Items
+
+	else {
+		if(!$submit) {
+------------------------------------------------------------------------------------------
+Add Above:
+------------------------------------------------------------------------------------------
+	/// Payed Access
+	else if($item[feature] == "payforacces1") {
+		$fiddl = ""; 
+		if(!$yessubmit && !$nosubmit){
+			eval("\$Fs_confirmation = \"".template("shop_confirm")."\";");
+			echo $Fs_confirmation;
+		}elseif($yessubmit){
+			if($memberinfo['money'] >= $item['price'] && $item['stock'] != 0) { $fidds = explode("|#|", $fiddl); 
+				for ($Fi = 0; $Fi < count($fidds); $Fi++) {				
+					$querycheck = $db->query("SELECT userlist FROM $table_forums WHERE fid='$fidds[$Fi]'");
+					$pacces = $db->fetch_array($querycheck);
+					$paccesl = $pacces[userlist];
+					if($paccesl == "") {
+						$paccesl .= $xmbuser;
+					} else {
+						$paccesl .= ", " . $xmbuser;
+					}
+					$db->query("UPDATE $table_forums SET userlist='$paccesl' WHERE fid='$fidds[$Fi]'");
+				}
+
+				$thatime = time();
+				$db->query("INSERT INTO $table_shop_bank VALUES('$memberinfo[uid]', 0, '$thatime', '$item[price]', '$item[itemname]', 'shop')");
+				$db->query("UPDATE $table_shop_items SET stock=stock-1, sold=sold+1 WHERE id='$iid'");
+				$db->query("UPDATE $table_members SET money=money-'$item[price]' WHERE username='$xmbuser'");
+
+				$outputtext = "You have been granted acces...";
+			} else {
+				$outputtext = "$lang_shop_item_noupdate";
+			}
+			eval("\$info = \"".template("shop_info")."\";");
+			echo $info;
+			?> <script> function redirect() { window.location.replace("shop_category.php?cid=<?=$cat[id]?>"); } setTimeout("redirect();", 1250); </script> <?
+		}else{
+			header("Location: shop_category.php?cid=$cat[id]");
+		}
+	}
+------------------------------------------------------------------------------------------
+
+
+
+
+Run in 'Upgrade'/'Insert Raw SQL':
+------------------------------------------------------------------------------------------
+INSERT INTO $table_shop_items VALUES ('', 1, 'payforacces1', 0, 'Forum Access', '', '', '', '', 'off', 0, 0, 0, 0, 0, 0);
+------------------------------------------------------------------------------------------
+
+
+
+
+$fiddl = ""; // Enter the FID here of the forum where you want the users to have access to.
+
+This line is clear I hope? Go to the forum and look at your address bar: /forumdisplay.php?fid=4
+The FID would be 4 here; 
+$fiddl = "4"; 
+
+If you want that a user can buy access to (let's say) 5 forums at once, you can seperate the FID's with a |#|
+Example:
+$fiddl = "4|#|15|#|23|#|24|#|34"; 
+
+
+
+
+Now, If you them to be able to buy access to 2 forums seperatly, look at this:
+Replace:
+------------------------------------------------------------------------------------------
+	else if($item[feature] == "payforacces1") {
+		$fiddl = "";
+------------------------------------------------------------------------------------------
+With:
+------------------------------------------------------------------------------------------
+	else if($item[feature] == "payforacces1" || $item[feature] == "payforacces2") {
+		if($item[feature] == "payforacces1"){
+			$fiddl = "";
+		}elseif($item[feature] == "payforacces2"){
+			$fiddl = "";
+		}
+------------------------------------------------------------------------------------------
+And the corresponding Upgrade line is (in addition to the very first one):
+------------------------------------------------------------------------------------------
+INSERT INTO $table_shop_items VALUES ('', 1, 'payforacces2', 0, 'Forum Access', '', '', '', '', 'off', 0, 0, 0, 0, 0, 0);
+------------------------------------------------------------------------------------------
+
+Or maybe even 3?
+Replace:
+------------------------------------------------------------------------------------------
+	else if($item[feature] == "payforacces1") {
+		$fiddl = "";
+------------------------------------------------------------------------------------------
+With:
+------------------------------------------------------------------------------------------
+	else if($item[feature] == "payforacces1" || $item[feature] == "payforacces2" || $item[feature] == "payforacces3") {
+		if($item[feature] == "payforacces1"){
+			$fiddl = "";
+		}elseif($item[feature] == "payforacces2"){
+			$fiddl = "";
+		}elseif($item[feature] == "payforacces3"){
+			$fiddl = "";
+		}
+------------------------------------------------------------------------------------------
+And the corresponding Upgrade lines are (in addition to the very first one):
+------------------------------------------------------------------------------------------
+INSERT INTO $table_shop_items VALUES ('', 1, 'payforacces2', 0, 'Forum Access', '', '', '', '', 'off', 0, 0, 0, 0, 0, 0);
+INSERT INTO $table_shop_items VALUES ('', 1, 'payforacces3', 0, 'Forum Access', '', '', '', '', 'off', 0, 0, 0, 0, 0, 0);
+------------------------------------------------------------------------------------------
+
+
+
+
+A possible example could be:
+
+------------------------------------------------------------------------------------------
+	else if($item[feature] == "payforacces1" || $item[feature] == "payforacces2" || $item[feature] == "payforacces3") {
+		if($item[feature] == "payforacces1"){
+			$fiddl = "12|#|15"; 			// Here someone buys access to the forums 12 and 15 at one time.
+		}elseif($item[feature] == "payforacces2"){
+			$fiddl = "12"; 				// Here someone buys access to the forum with fid = 12.
+		}elseif($item[feature] == "payforacces3"){
+			$fiddl = "18|#|20|#|21"; 		// Here someone buys access to the forums 18, 20 and 21 at one time.
+		}
+------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+If you have my Bank installed, V2+
+Change this:
+------------------------------------------------------------------------------------------
+				$thatime = time();
+				$db->query("INSERT INTO $table_shop_bank VALUES('$memberinfo[uid]', 0, '$thatime', '$item[price]', '$item[itemname]', 'shop')");
+------------------------------------------------------------------------------------------
+Into this:
+------------------------------------------------------------------------------------------
+				insert_bank_trans($self[uid], '0', $item[price], $item[itemname], 'Goods', 'Shop Purchase');
+------------------------------------------------------------------------------------------
+
+
+
+
+
+Ok. I think I covered like everything here...
+Now go over here: /shop_admin.php?action=items&cid=1
+Edit the item to set the proper price, description, stock, etc.
+And maybe move it to a different category later on.
+
+Cheers,
+ - FunForum

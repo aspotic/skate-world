@@ -1,0 +1,14 @@
+<?php
+$textcolor='#000000';
+$linkcolor='#FFFFFF';
+$bgcolor='#ffffff';
+$tableborder='#ffcc00';
+$timeout='24';
+$ip_file='ip.txt';
+$font='arial';
+$fontsize='2';
+$datafile='data.txt';
+$option='10';
+$use_image='1';
+$image_for_vote='gfx/logo.gif';
+?>
